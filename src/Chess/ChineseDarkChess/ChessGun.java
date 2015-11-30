@@ -1,4 +1,4 @@
-package Chess;
+package Chess.ChineseDarkChess;
 
 public class ChessGun extends DarkChess {
   public ChessGun(){

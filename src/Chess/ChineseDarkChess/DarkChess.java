@@ -1,6 +1,10 @@
-package Chess;
+package Chess.ChineseDarkChess;
 
-public class DarkChess extends Chess implements Eatable {
+import Chess.Chess;
+import Chess.Eatable;
+import Chess.Movable;
+
+public class DarkChess extends Chess implements Eatable, Movable {
   
   public static final int SOLDIER_WEIGHT = 0;
   public static final int HORSE_WEIGHT = 1;  
@@ -40,7 +44,7 @@ public class DarkChess extends Chess implements Eatable {
     return true;
   }
 
-  public void setWeight(int weight) {
+  protected void setWeight(int weight) {
     if (checkWeight(weight)) {
       this.weight = weight;
       //return true;
@@ -73,7 +77,7 @@ public class DarkChess extends Chess implements Eatable {
     }
   }
   
-  protected boolean move() {
+  public void move() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 

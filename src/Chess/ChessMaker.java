@@ -1,5 +1,7 @@
 package Chess;
 
+import Chess.ChineseDarkChess.DarkChess;
+
 public class ChessMaker extends DarkChess{
     
     
