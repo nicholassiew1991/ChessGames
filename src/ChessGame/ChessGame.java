@@ -1,4 +1,4 @@
-
+package ChessGame;
 
 public abstract class ChessGame {
 
@@ -11,4 +11,7 @@ public abstract class ChessGame {
 	public void setPlayerTurn(String strPlayerTurn) {
 		this.strPlayerTurn = strPlayerTurn;
 	}
+  
+  protected abstract void startGame();
+  protected abstract void playGame();
 }
