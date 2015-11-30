@@ -1,0 +1,5 @@
+package Chess;
+
+public interface Movable {
+  public void move();
+}
