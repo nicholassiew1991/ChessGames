@@ -12,6 +12,10 @@ public class ChineseDarkChessGame extends ChessGame {
   
   private JFrame gameUI;
   
+  public ChineseDarkChessGame() {
+    System.out.println("Chinese");
+  }
+  
   public ChineseDarkChessGame(Player p1, Player p2) {
     setPlayer(p1, p1);
   }
@@ -26,12 +30,12 @@ public class ChineseDarkChessGame extends ChessGame {
 	}
 
   @Override
-  protected void playGame() {
+  public void playGame() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
   @Override
-  protected void startGame() {
+  public void startGame() {
     this.gameUI.setVisible(true);
   }
 }

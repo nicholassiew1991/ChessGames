@@ -12,6 +12,6 @@ public abstract class ChessGame {
 		this.strPlayerTurn = strPlayerTurn;
 	}
   
-  protected abstract void startGame();
-  protected abstract void playGame();
+  public abstract void startGame();
+  public abstract void playGame();
 }
