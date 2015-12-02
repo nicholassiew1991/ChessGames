@@ -1,6 +1,10 @@
 package ChessGame;
 
+import javax.swing.JFrame;
+
 public abstract class ChessGame {
+  
+  protected JFrame chessGameUI;
 
 	private String strPlayerTurn = null;
 
@@ -12,6 +16,5 @@ public abstract class ChessGame {
 		this.strPlayerTurn = strPlayerTurn;
 	}
   
-  public abstract void startGame();
   public abstract void playGame();
 }
