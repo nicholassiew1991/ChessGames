@@ -12,33 +12,25 @@ public class ChineseDarkChessGame extends ChessGame {
 
 	private Player p1;
 	private Player p2;
-
-  private JFrame gameUI;
+  
   private JPanel container;
 
-  public ChineseDarkChessGame() {
-    System.out.println("Chinese");
-  }
-
   public ChineseDarkChessGame(Player p1, Player p2) {
-    setPlayer(p1, p2);
     initFrame();
+    setPlayer(p1, p2);
   }
 
   private void initFrame() {
-    gameUI = new JFrame(this.FRAME_TITLE);
+    super.initFrame(FRAME_TITLE);
     initCointainer();
-    
-    gameUI.setSize(this.FRAME_WIDTH, this.FRAME_HEIGHT);
-    gameUI.setLocationRelativeTo(null);
-    gameUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    gameUI.setResizable(false);
+    cgFrame.setSize(this.FRAME_WIDTH, this.FRAME_HEIGHT);
+    cgFrame.setLocationRelativeTo(null);
   }
 
   private void initCointainer() {
     container = new JPanel();
 
-    gameUI.add(container);
+    cgFrame.add(container);
   }
 
 	private void setPlayer(Player p1, Player p2) {
@@ -49,9 +41,4 @@ public class ChineseDarkChessGame extends ChessGame {
 	private void generateChesses() {
 
 	}
-
-  @Override
-  public void playGame() {
-    this.gameUI.setVisible(true);
-  }
 }
