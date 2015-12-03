@@ -143,7 +143,7 @@ public class Main extends JFrame{
       return new ChineseDarkChessGame(p1, p2);
     }
     else if (selectedItem.equalsIgnoreCase("Gomoku")) {
-      return new GomokuChessGame();
+      return new GomokuChessGame(p1, p2);
     }
 
     return null;

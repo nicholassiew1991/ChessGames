@@ -12,7 +12,7 @@ public class ChineseDarkChessGame extends ChessGame {
 
 	private Player p1;
 	private Player p2;
-  
+
   private JPanel container;
 
   public ChineseDarkChessGame(Player p1, Player p2) {
@@ -21,24 +21,17 @@ public class ChineseDarkChessGame extends ChessGame {
   }
 
   private void initFrame() {
-    super.initFrame(FRAME_TITLE);
+    super.initFrame(FRAME_TITLE, FRAME_WIDTH, FRAME_HEIGHT);
     initCointainer();
-    cgFrame.setSize(this.FRAME_WIDTH, this.FRAME_HEIGHT);
-    cgFrame.setLocationRelativeTo(null);
   }
 
   private void initCointainer() {
     container = new JPanel();
-
     cgFrame.add(container);
   }
 
 	private void setPlayer(Player p1, Player p2) {
 		this.p1 = p1;
 		this.p2 = p2;
-	}
-
-	private void generateChesses() {
-
 	}
 }

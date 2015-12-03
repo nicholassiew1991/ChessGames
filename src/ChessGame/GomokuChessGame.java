@@ -1,18 +1,21 @@
 package ChessGame;
 
 public class GomokuChessGame extends ChessGame {
-  
+
+  private final int FRAME_WIDTH = 600;
+  private final int FRAME_HEIGHT = 300;
+
+  private final String FRAME_TITLE = "Gomoku Chess";
+
   public GomokuChessGame() {
     System.out.println("Gomoku");
   }
 
-  @Override
-  public void playGame() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  public GomokuChessGame(Player p1, Player p2) {
+    initFrame();
   }
-  
-  public void startGame() {
-    System.out.println("gg");
+
+  private void initFrame() {
+    super.initFrame(FRAME_TITLE, FRAME_WIDTH, FRAME_HEIGHT);
   }
-  
 }
