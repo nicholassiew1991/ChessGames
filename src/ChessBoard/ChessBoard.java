@@ -1,3 +1,5 @@
+package ChessBoard;
+
 public class ChessBoard
 {
        private int LocX, LocY;

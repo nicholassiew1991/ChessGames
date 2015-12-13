@@ -6,13 +6,14 @@ import Chess.Movable;
 
 public class DarkChess extends Chess implements Eatable, Movable {
   
-  public static final int SOLDIER_WEIGHT = 0;
-  public static final int HORSE_WEIGHT = 1;  
-  public static final int CAR_WEIGHT = 2;
-  public static final int ELEPHANT_WEIGHT = 3;
-  public static final int SCHOLAR_WEIGHT = 4;
-  public static final int GENERAL_WEIGHT = 5;
-  public static final int GUN_WIEGHT = 6;
+  public static final int SOLDIER_WEIGHT = 1;
+  public static final int GUN_WIEGHT = 2;
+  public static final int HORSE_WEIGHT = 3;  
+  public static final int CAR_WEIGHT = 4;
+  public static final int ELEPHANT_WEIGHT = 5;
+  public static final int SCHOLAR_WEIGHT = 6;
+  public static final int GENERAL_WEIGHT = 7;
+  
   
   public static final int MAXWEIGHT = 6;
   public static final int MINWEIGHT = 0;
@@ -33,8 +34,19 @@ public class DarkChess extends Chess implements Eatable, Movable {
     this.setWeight(weight);
   }
   
-  public void eat() {
+  @Override
+  public void eat(Chess c) {
+    DarkChess dc = (DarkChess) c;
     
+    if (weight == SOLDIER_WEIGHT && dc.getWeight() == GENERAL_WEIGHT) {
+      // eat
+    }
+    else if (weight > dc.getWeight()) {
+      //eat
+    }
+    else {
+      // Can't eat
+    }
   }
 
   public DarkChess(String chesstype, String darkchessname, int team, int weight, int movedistance) {
