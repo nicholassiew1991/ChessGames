@@ -27,7 +27,7 @@ public class ChineseDarkChessGame extends ChessGame {
   public ChineseDarkChessGame(Player p1, Player p2) {
     dcb = new DarkChessBoard();
     initFrame();
-    setPlayer(p1, p2);
+    setPlayers(p1, p2);
   }
 
   private void initFrame() {
@@ -37,32 +37,32 @@ public class ChineseDarkChessGame extends ChessGame {
 
   private void initCointainer() {
     container = new JPanel();
-    
+
     initNorthPanel();
     initCenterPanel();
-    
+
     container.setLayout(new BorderLayout());
     container.add(northPanel, BorderLayout.NORTH);
     container.add(centerPanel, BorderLayout.CENTER);
     cgFrame.add(container);
   }
-  
+
   private void initNorthPanel() {
     northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     lblTurn = new JLabel("Turn: ");
-    
+
     northPanel.add(lblTurn);
   }
-  
+
   private void initCenterPanel() {
     centerPanel = new JPanel();
-    centerPanel.setLayout(new GridLayout(DarkChessBoard.LANDSCAPE_ROW, DarkChessBoard.LANDSCAPE_COL));
+    centerPanel.setLayout(dcb.getLayout());
     for (int a = 0; a < 32; a++) {
       centerPanel.add(new JLabel("Turn: "));
     }
   }
 
-	private void setPlayer(Player p1, Player p2) {
+	private void setPlayers(Player p1, Player p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
