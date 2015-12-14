@@ -1,5 +1,5 @@
 package Chess;
 
-public interface Eatable {
-  public void eat(Chess c);
+public interface Eatable<T extends Chess> {
+  public void eat(T c);
 }

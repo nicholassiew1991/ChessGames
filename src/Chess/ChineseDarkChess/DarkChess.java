@@ -4,7 +4,7 @@ import Chess.Chess;
 import Chess.Eatable;
 import Chess.Movable;
 
-public class DarkChess extends Chess implements Eatable, Movable {
+public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
 
   public static final int SOLDIER_WEIGHT = 1;
   public static final int GUN_WIEGHT = 2;
@@ -36,8 +36,8 @@ public class DarkChess extends Chess implements Eatable, Movable {
   }
 
   @Override
-  public void eat(Chess c) {
-    int targetWeight = ((DarkChess) c).getWeight();
+  public void eat(DarkChess c) {
+    int targetWeight = c.getWeight();
 
     if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
       // eat
