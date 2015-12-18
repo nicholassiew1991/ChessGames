@@ -50,11 +50,11 @@ public class DarkChessBoard extends ChessBoard {
     return new GridLayout(getNumOfRows(), getNumOfCols());
   }
   
-  private int getNumOfRows() {
+  public int getNumOfRows() {
     return (layout == LANDSCAPE ? LANDSCAPE_ROW : POTRAIT_ROW);
   }
   
-  private int getNumOfCols() {
+  public int getNumOfCols() {
     return (layout == LANDSCAPE ? LANDSCAPE_COL : POTRAIT_COL);
   }
 
