@@ -2,7 +2,7 @@ package Chess.ChineseDarkChess;
 
 public class ChessHorse extends DarkChess {
     public ChessHorse(int team){
-        super(team);
-        super.setWeight(HORSE_WEIGHT);
+      super("Horse", team);
+      super.setWeight(HORSE_WEIGHT);
     }
 }

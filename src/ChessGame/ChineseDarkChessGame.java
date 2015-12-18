@@ -1,10 +1,12 @@
 package ChessGame;
 
+import Chess.ChessMaker.DarkChessMaker;
 import Chess.ChineseDarkChess.DarkChess;
 import ChessBoard.DarkChessBoard;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,11 +25,18 @@ public class ChineseDarkChessGame extends ChessGame {
 
   private JPanel container, northPanel, centerPanel;
   private JLabel lblTurn;
+  private JButton btnChesses[][];
 
   public ChineseDarkChessGame(Player p1, Player p2) {
     dcb = new DarkChessBoard(DarkChessBoard.LANDSCAPE);
     initFrame();
+    initGame();
+  }
+
+  private void initGame() {
     setPlayers(p1, p2);
+    this.RedChess = getChesses(DarkChess.TEAM_RED);
+    this.BlackChess = getChesses(DarkChess.TEAM_BLACK);
   }
 
   private void initFrame() {
@@ -57,8 +66,12 @@ public class ChineseDarkChessGame extends ChessGame {
   private void initCenterPanel() {
     centerPanel = new JPanel();
     centerPanel.setLayout(dcb.getLayout());
-    for (int a = 0; a < 32; a++) {
-      centerPanel.add(new JLabel("Turn: "));
+    this.btnChesses = new JButton[dcb.getNumOfRows()][dcb.getNumOfCols()];
+    for (int a = 0; a < this.btnChesses.length; a++) {
+      for (int b = 0; b < this.btnChesses[a].length; b++) {
+        this.btnChesses[a][b] = new JButton(a + ", " + b);
+        centerPanel.add(this.btnChesses[a][b]);
+      }
     }
   }
 
@@ -66,4 +79,28 @@ public class ChineseDarkChessGame extends ChessGame {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
+
+  private DarkChess[] getChesses(int team) {
+
+    DarkChessMaker cm = new DarkChessMaker();
+
+    return new DarkChess[] {
+      cm.createChess(cm.GENERAL, team),
+      cm.createChess(cm.SCHOLAR, team),
+      cm.createChess(cm.SCHOLAR, team),
+      cm.createChess(cm.ELEPHANT, team),
+      cm.createChess(cm.ELEPHANT, team),
+      cm.createChess(cm.CAR, team),
+      cm.createChess(cm.CAR, team),
+      cm.createChess(cm.HORSE, team),
+      cm.createChess(cm.HORSE, team),
+      cm.createChess(cm.GUN, team),
+      cm.createChess(cm.GUN, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team)
+    };
+  }
 }

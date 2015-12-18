@@ -5,34 +5,34 @@ import Chess.ChineseDarkChess.*;
 
 public class DarkChessMaker extends ChessMaker {
 
-  public Chess createChess(int chesstype, int team) {
+  public final byte GENERAL = 1;
+  public final byte SCHOLAR = 2;
+  public final byte ELEPHANT = 3;
+  public final byte CAR = 4;
+  public final byte HORSE = 5;
+  public final byte GUN = 6;
+  public final byte SOLDIER = 7;
+
+  @Override
+  public DarkChess createChess(int chesstype, int team) {
 
     switch (chesstype) {
-      case 1:
-        ChessGeneral general = new ChessGeneral(team);
-        return general;
-      case 2:
-        ChessScholar scholar = new ChessScholar(team);
-        return scholar;
-      case 3:
-        ChessElephant elephant = new ChessElephant(team);
-        return elephant;
-      case 4:
-        ChessCar car = new ChessCar(team);
-        return car;
-      case 5:
-        ChessHorse horse = new ChessHorse(team);
-        return horse;
-      case 6:
-        ChessGun gun = new ChessGun(team);
-        return gun;
-      case 7:
-        ChessSolidier solidier = new ChessSolidier(team);
-        return solidier;
+      case GENERAL:
+        return new ChessGeneral(team);
+      case SCHOLAR:
+        return new ChessScholar(team);
+      case ELEPHANT:
+        return new ChessElephant(team);
+      case CAR:
+        return new ChessCar(team);
+      case HORSE:
+        return new ChessHorse(team);
+      case GUN:
+        return new ChessGun(team);
+      case SOLDIER:
+        return new ChessSoldier(team);
       default:
-        break;
+        return null;
     }
-
-    return null;
   }
 }

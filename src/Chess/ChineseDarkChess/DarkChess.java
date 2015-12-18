@@ -16,19 +16,21 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
 
   public static final int MAXWEIGHT = 6;
   public static final int MINWEIGHT = 0;
-  public static final int REDTEAM = 0;
-  public static final int BLACKTEAM = 1;
+  
+  public static final int TEAM_RED = 1;
+  public static final int TEAM_BLACK = 2;
 
   private final String IMG_PATH = "res/img/ChineseDarkChess/";
 
+  private String name;
   private int team;
-  private String darkchessname;
   private int weight;
   private int movedistance;
   private int status;
 
-  public DarkChess(int team) {
-    super(team);
+  public DarkChess(String name, int team) {
+    this.setName(name);
+    this.setTeam(team);
   }
 
   @Override
@@ -56,30 +58,37 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
     }
   }
 
-  protected boolean checkWeight(int weight) {
+  public int getWeight() {
+    return this.weight;
+  }
+  
+  private boolean checkWeight(int weight) {
     if (weight >= MINWEIGHT && weight < MAXWEIGHT) {
       return true;
     } else {
       return false;
     }
   }
-
-  public int getWeight() {
-    return this.weight;
+  
+  private void setName(String name) {
+    this.name = name;
+  }
+  
+  public String getName(String nmae) {
+    return this.name;
   }
 
-  public boolean setTeam(int team) {
-    if (team == REDTEAM) {
-      this.team = 0;
+  private boolean setTeam(int team) {
+    if (team == TEAM_RED || team == TEAM_BLACK) {
+      this.team = team;
       return true;
-    } else if (team == BLACKTEAM) {
-      this.team = 1;
-      return true;
-    } else {
+    }
+    else {
       return false;
     }
   }
 
+  @Override
   public void move() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }

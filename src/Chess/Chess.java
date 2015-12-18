@@ -1,9 +1,6 @@
 package Chess;
 
 public abstract class Chess {
-    
-    
-    // s
   
   private String chessType;
   
