@@ -9,17 +9,17 @@ public class DarkChessBoard extends ChessBoard {
   private final int LANDSCAPE_ROW = 4;
   private final int LANDSCAPE_COL = 8;
   private final int POTRAIT_ROW = 8;
-  private final int PORTAIT_COL = 4;
+  private final int POTRAIT_COL = 4;
 
   public static final int LANDSCAPE = 1;
-  //public static final int POTRAIT = 2;
+  public static final int POTRAIT = 2;
 
   private Location[][] locOnBoard;
 
   private int layout;
 
-  public DarkChessBoard() {
-    setLayout();
+  public DarkChessBoard(int layout) {
+    setLayout(layout);
   }
 
   public void placeChessRandom(DarkChess dc) {
@@ -37,19 +37,25 @@ public class DarkChessBoard extends ChessBoard {
       break;
     }
   }
-
-  /*
-   * Set the layout and initialize the location on the board.
-   * By default is landscape
-   */
-  private void setLayout() {
-    this.layout = LANDSCAPE;
-    this.locOnBoard = new Location[LANDSCAPE_ROW][LANDSCAPE_COL];
+  
+  private void setLayout(int layout) {
+    // Potrait not available yet.
+    this.layout = (layout == LANDSCAPE ? LANDSCAPE : LANDSCAPE);
+    this.locOnBoard = new Location[getNumOfRows()][getNumOfCols()];
+    
     initLocOnBoard();
   }
 
   public GridLayout getLayout() {
-    return new GridLayout(LANDSCAPE_ROW, LANDSCAPE_COL);
+    return new GridLayout(getNumOfRows(), getNumOfCols());
+  }
+  
+  private int getNumOfRows() {
+    return (layout == LANDSCAPE ? LANDSCAPE_ROW : POTRAIT_ROW);
+  }
+  
+  private int getNumOfCols() {
+    return (layout == LANDSCAPE ? LANDSCAPE_COL : POTRAIT_COL);
   }
 
   public Location[][] getBoardInfo() {

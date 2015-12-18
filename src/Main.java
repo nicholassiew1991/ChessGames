@@ -76,7 +76,7 @@ public class Main extends JFrame{
     txtBlackInput = new JTextField("P2");
     btnStart = new JButton("Start");
     cmbGames = new JComboBox(games);
-
+    
     panelForm.setBorder(new EmptyBorder(15, 0, 0, 0));
 
     txtRedInput.setColumns(TEXTFIELD_COLUMN);

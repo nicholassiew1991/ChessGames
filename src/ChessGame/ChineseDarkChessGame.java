@@ -25,7 +25,7 @@ public class ChineseDarkChessGame extends ChessGame {
   private JLabel lblTurn;
 
   public ChineseDarkChessGame(Player p1, Player p2) {
-    dcb = new DarkChessBoard();
+    dcb = new DarkChessBoard(DarkChessBoard.LANDSCAPE);
     initFrame();
     setPlayers(p1, p2);
   }

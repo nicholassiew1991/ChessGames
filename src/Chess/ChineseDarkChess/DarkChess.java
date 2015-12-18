@@ -27,12 +27,8 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   private int movedistance;
   private int status;
 
-  public DarkChess() {
-
-  }
-
-  public DarkChess(int weight) {
-    this.setWeight(weight);
+  public DarkChess(int team) {
+    super(team);
   }
 
   @Override
@@ -42,15 +38,12 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
     if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
       // eat
     }
-    else if (weight > targetWeight) {
+    else if (weight >= targetWeight) {
       //eat
     }
     else {
       // Can't eat
     }
-  }
-
-  public DarkChess(String chesstype, String darkchessname, int team, int weight, int movedistance) {
   }
 
   public boolean invertChess() {
