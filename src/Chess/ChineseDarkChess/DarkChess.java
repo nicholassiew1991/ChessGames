@@ -74,7 +74,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
     this.name = name;
   }
   
-  public String getName(String nmae) {
+  public String getName() {
     return this.name;
   }
 
@@ -87,10 +87,19 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
       return false;
     }
   }
+  
+  public int getTeam() {
+    return team;
+  }
 
   @Override
   public void move() {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+  
+  @Override
+  public String toString() {
+    return String.format("Name: %s\nTeam: %d", name, team);
   }
 
 }

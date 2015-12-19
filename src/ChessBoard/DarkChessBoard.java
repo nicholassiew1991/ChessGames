@@ -1,6 +1,7 @@
 package ChessBoard;
 
 import Chess.ChineseDarkChess.DarkChess;
+import Utilities.Util;
 import java.awt.GridLayout;
 import java.util.Random;
 
@@ -21,26 +22,34 @@ public class DarkChessBoard extends ChessBoard {
   public DarkChessBoard(int layout) {
     setLayout(layout);
   }
-
-  public void placeChessRandom(DarkChess dc) {
+  
+  public void placeChess(DarkChess[] dc1, DarkChess[] dc2) {
     Random rand = new Random();
+    DarkChess[] temp = new DarkChess[dc1.length + dc2.length];
+    
+    System.arraycopy(dc1, 0, temp, 0, dc1.length);
+    System.arraycopy(dc2, 0, temp, dc1.length, dc2.length);
+    Util.sufflingArray(temp);
+    
+    for (DarkChess dc : temp) {
+      while (true) {
+        int x = rand.nextInt(4);
+        int y = rand.nextInt(8);
 
-    while (true) {
-      int x = rand.nextInt(4);
-      int y = rand.nextInt(8);
+        if (locOnBoard[x][y].getChess() != null) {
+          continue;
+        }
 
-      if (locOnBoard[x][y].getChess() == null) {
-        continue;
+        locOnBoard[x][y].setChess(dc);
+        break;
       }
-
-      locOnBoard[x][y].setChess(dc);
-      break;
     }
   }
   
   private void setLayout(int layout) {
     // Potrait not available yet.
-    this.layout = (layout == LANDSCAPE ? LANDSCAPE : LANDSCAPE);
+    // If layout value is unexpected, then set it to landscape
+    this.layout = (layout == POTRAIT ? LANDSCAPE : LANDSCAPE);
     this.locOnBoard = new Location[getNumOfRows()][getNumOfCols()];
     
     initLocOnBoard();
@@ -68,5 +77,10 @@ public class DarkChessBoard extends ChessBoard {
         locOnBoard[a][b] = new Location(a, b);
       }
     }
+  }
+  
+  public DarkChess getChess(int x, int y) {
+    DarkChess dc = (DarkChess) locOnBoard[x][y].getChess();
+    return dc;
   }
 }
