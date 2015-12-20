@@ -79,7 +79,11 @@ public class DarkChessBoard extends ChessBoard {
     }
   }
   
-  public DarkChess getChess(int x, int y) {
+  public void setChessOnLoc(DarkChess dc, int x, int y) {
+    locOnBoard[x][y].setChess(dc);
+  }
+  
+  public DarkChess getChessOnLoc(int x, int y) {
     DarkChess dc = (DarkChess) locOnBoard[x][y].getChess();
     return dc;
   }

@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
 public class ChineseDarkChessGame extends ChessGame {
 
   // <editor-fold defaultstate="collapsed" desc="Constants declaration">
-  private final int FRAME_WIDTH = 600;
+  private final int FRAME_WIDTH = 700;
   private final int FRAME_HEIGHT = 400;
 
   private final String FRAME_TITLE = "Chinese Dark Chess";
@@ -35,8 +36,8 @@ public class ChineseDarkChessGame extends ChessGame {
 
   public ChineseDarkChessGame(Player p1, Player p2) {
     dcb = new DarkChessBoard(DarkChessBoard.LANDSCAPE);
-    initUI();
     initGame();
+    initUI();
   }
 
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
@@ -46,10 +47,44 @@ public class ChineseDarkChessGame extends ChessGame {
     this.BlackChess = getChesses(DarkChess.TEAM_BLACK);
     dcb.placeChess(RedChess, BlackChess);
   }
+  
+  private void drawButtonsImage() {
+    for (int a = 0; a < this.btnChesses.length; a++) {
+      for (int b = 0; b < this.btnChesses[a].length; b++) {
+        DarkChess dc = dcb.getChessOnLoc(a, b);
+        this.btnChesses[a][b].setIcon((dc == null ? null : dc.getChessImage()));
+      }
+    }
+  }
+  
+  private DarkChess[] getChesses(int team) {
+
+    DarkChessMaker cm = new DarkChessMaker();
+
+    return new DarkChess[] {
+      cm.createChess(cm.GENERAL, team),
+      cm.createChess(cm.SCHOLAR, team),
+      cm.createChess(cm.SCHOLAR, team),
+      cm.createChess(cm.ELEPHANT, team),
+      cm.createChess(cm.ELEPHANT, team),
+      cm.createChess(cm.CAR, team),
+      cm.createChess(cm.CAR, team),
+      cm.createChess(cm.HORSE, team),
+      cm.createChess(cm.HORSE, team),
+      cm.createChess(cm.GUN, team),
+      cm.createChess(cm.GUN, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team),
+      cm.createChess(cm.SOLDIER, team)
+    };
+  }
 
   private void initUI() {
     super.initFrame(FRAME_TITLE, FRAME_WIDTH, FRAME_HEIGHT);
     initCointainer();
+    drawButtonsImage();
   }
 
   private void initCointainer() {
@@ -87,7 +122,6 @@ public class ChineseDarkChessGame extends ChessGame {
           public void actionPerformed(ActionEvent e) {
             boardButtonEvents(e);
           }
-          
         });
       }
     }
@@ -99,35 +133,18 @@ public class ChineseDarkChessGame extends ChessGame {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
-
-  private DarkChess[] getChesses(int team) {
-
-    DarkChessMaker cm = new DarkChessMaker();
-
-    return new DarkChess[] {
-      cm.createChess(cm.GENERAL, team),
-      cm.createChess(cm.SCHOLAR, team),
-      cm.createChess(cm.SCHOLAR, team),
-      cm.createChess(cm.ELEPHANT, team),
-      cm.createChess(cm.ELEPHANT, team),
-      cm.createChess(cm.CAR, team),
-      cm.createChess(cm.CAR, team),
-      cm.createChess(cm.HORSE, team),
-      cm.createChess(cm.HORSE, team),
-      cm.createChess(cm.GUN, team),
-      cm.createChess(cm.GUN, team),
-      cm.createChess(cm.SOLDIER, team),
-      cm.createChess(cm.SOLDIER, team),
-      cm.createChess(cm.SOLDIER, team),
-      cm.createChess(cm.SOLDIER, team),
-      cm.createChess(cm.SOLDIER, team)
-    };
-  }
   
   private void boardButtonEvents(ActionEvent e) {
     int x = Integer.parseInt(e.getActionCommand().substring(0, 1));
     int y = Integer.parseInt(e.getActionCommand().substring(2));
     
-    System.out.println(dcb.getChess(x, y));
+    DarkChess dc = dcb.getChessOnLoc(x, y);
+    
+    if (dc == null) {
+      return; // Do nothing
+    }
+    
+    dc.setStatus(DarkChess.STATUS_FLIPPED);
+    drawButtonsImage();
   }
 }

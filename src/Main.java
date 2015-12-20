@@ -157,7 +157,5 @@ public class Main extends JFrame{
 
   public static void main(String[] args) {
     new Main().open();
-    /*java.io.File f = new java.io.File("res/img/ChineseDarkChess/GunB.jpg");
-    System.out.println(f.exists());*/
   }
 }
