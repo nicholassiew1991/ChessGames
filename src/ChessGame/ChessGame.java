@@ -3,7 +3,7 @@ package ChessGame;
 import javax.swing.JFrame;
 
 public abstract class ChessGame {
-
+  
   protected JFrame cgFrame;
 
   public void playGame() {
