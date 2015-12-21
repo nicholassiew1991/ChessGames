@@ -33,15 +33,22 @@ public class ChineseDarkChessGame extends ChessGame {
   private JPanel container, northPanel, centerPanel;
   private JLabel lblTurn;
   private JButton btnChesses[][];
+  
+  public static ChessGame getInstance(Player p1, Player p2) {
+    if (cg == null) {
+      cg = new ChineseDarkChessGame(p1, p2);
+    }
+    return cg;
+  }
 
-  public ChineseDarkChessGame(Player p1, Player p2) {
+  private ChineseDarkChessGame(Player p1, Player p2) {
     dcb = new DarkChessBoard(DarkChessBoard.LANDSCAPE);
-    initGame();
+    initGame(p1, p2);
     initUI();
   }
 
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
-  private void initGame() {
+  private void initGame(Player p1, Player p2) {
     setPlayers(p1, p2);
     this.RedChess = getChesses(DarkChess.TEAM_RED);
     this.BlackChess = getChesses(DarkChess.TEAM_BLACK);

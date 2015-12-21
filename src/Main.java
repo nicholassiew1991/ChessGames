@@ -5,7 +5,6 @@ import ChessGame.Player;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.Files;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -138,10 +137,10 @@ public class Main extends JFrame{
     Player p2 = new Player(txtBlackInput.getText());
 
     if (selectedItem.equalsIgnoreCase("Chinese Dark Chess")) {
-      return new ChineseDarkChessGame(p1, p2);
+      return ChineseDarkChessGame.getInstance(p1, p2);
     }
     else if (selectedItem.equalsIgnoreCase("Gomoku")) {
-      return new GomokuChessGame(p1, p2);
+      return GomokuChessGame.getInstance(p1, p2);
     }
 
     return null;
