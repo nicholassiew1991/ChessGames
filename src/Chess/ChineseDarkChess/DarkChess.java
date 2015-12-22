@@ -17,6 +17,11 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   public static final int STATUS_UNKNOWN = 1;
   public static final int STATUS_FLIPPED = 2;
   public static final int STATUS_DEATH = 3;
+  
+  public static final int EAT_SUCCESS = 0;
+  public static final int EAT_FAILED = 1;
+  public static final int EAT_FAILED_SAME_TEAM = 2;
+  public static final int EAT_FAILED_UNKNOWN_CHESS = 3;
 
   protected static final int SOLDIER_WEIGHT = 1;
   protected static final int GUN_WIEGHT = 2;
@@ -55,28 +60,23 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   }
 
   @Override
-  public boolean eat(DarkChess c) {
+  public int eat(DarkChess c) {
     int targetWeight = c.getWeight();
     
     if (this.team == c.getTeam()) {
-      return false;
-      // can't eat
+      return EAT_FAILED_SAME_TEAM;
     }
     else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
-      return false;
-      // can't eat
+      return EAT_FAILED_UNKNOWN_CHESS;
     }
     else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
-      return true;
-      // eat
+      return EAT_SUCCESS;
     }
     else if (weight >= targetWeight) {
-      return true;
-      //eat
+      return EAT_SUCCESS;
     }
     else {
-      return false;
-      // Can't eat
+      return EAT_FAILED;
     }
   }
 
@@ -127,9 +127,9 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
     return String.format("Name: %s\nTeam: %d\nWeight: %d\n", name, team, weight);
   }
 
-    @Override
-    public boolean move() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  @Override
+  public boolean move() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
 
 }

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ChineseDarkChessGame extends ChessGame {
@@ -20,15 +21,14 @@ public class ChineseDarkChessGame extends ChessGame {
   private final int FRAME_HEIGHT = 400;
 
   private final String FRAME_TITLE = "Chinese Dark Chess";
-  private final String TURN_RED = "Turn: RED";
-  private final String TURN_BLACK = "Turn: BLACK";
+  private final String TURN = "Turn: ";
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Variables declaration">
   private DarkChessBoard dcb;
-  private Player p1, p2;
+  private Player p1, p2, currentTurnPlayer;
   private DarkChess RedChess[], BlackChess[];
-   
+  
   /* These variable is used to control the action after click the buttons. */
   private DarkChess currentSelectChess = null;
   private boolean isSelectChess = false;
@@ -40,6 +40,7 @@ public class ChineseDarkChessGame extends ChessGame {
   private JLabel lblTurn;
   private JButton btnChesses[][];
   
+  // <editor-fold defaultstate="collapsed" desc="Constructuors">
   public static ChessGame getInstance(Player p1, Player p2) {
     if (cg == null) {
       cg = new ChineseDarkChessGame(p1, p2);
@@ -52,13 +53,15 @@ public class ChineseDarkChessGame extends ChessGame {
     initGame(p1, p2);
     initUI();
   }
-
+  // </editor-fold>
+  
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
   private void initGame(Player p1, Player p2) {
     setPlayers(p1, p2);
     this.RedChess = getChesses(DarkChess.TEAM_RED);
     this.BlackChess = getChesses(DarkChess.TEAM_BLACK);
     dcb.placeChess(RedChess, BlackChess);
+    currentTurnPlayer = p1;
   }
   
   private void drawButtonsImage() {
@@ -114,7 +117,7 @@ public class ChineseDarkChessGame extends ChessGame {
 
   private void initNorthPanel() {
     northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    lblTurn = new JLabel("Turn: ");
+    lblTurn = new JLabel("Turn: " + this.currentTurnPlayer);
 
     northPanel.add(lblTurn);
   }
@@ -147,6 +150,11 @@ public class ChineseDarkChessGame extends ChessGame {
 		this.p2 = p2;
 	}
   
+  private void changePlayerTurn() {
+    this.currentTurnPlayer = (this.currentTurnPlayer == p1 ? p2 : p1);
+    this.lblTurn.setText(this.TURN + this.currentTurnPlayer);
+  }
+  
   private void selectChess(DarkChess dc, int x, int y) {
     this.isSelectChess = true;
     currentSelectChess = dc;
@@ -171,7 +179,12 @@ public class ChineseDarkChessGame extends ChessGame {
     
     if (this.isSelectChess == false) {
       if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
-          dc.setStatus(DarkChess.STATUS_FLIPPED);
+        dc.setStatus(DarkChess.STATUS_FLIPPED);
+        changePlayerTurn();
+        drawButtonsImage();
+      }
+      else if (dc.getTeam() != currentTurnPlayer.getSide()) {
+        JOptionPane.showMessageDialog(null, "Please select your's side chess.");
       }
       else if (dc.getStatus() == DarkChess.STATUS_FLIPPED) {
         selectChess(dc, x, y);
@@ -184,16 +197,14 @@ public class ChineseDarkChessGame extends ChessGame {
       else {
         if (dc == null) {
           System.out.println("Move");
-          deselectChess();
         }
         else {
           System.out.println("Eat");                
-          System.out.println(this.currentSelectChess.eat(dc));
-          deselectChess();
+          System.out.println(this.currentSelectChess.eat(dc)); 
         }
+        deselectChess();
+        drawButtonsImage();
       }
     }
-    
-    drawButtonsImage();
   }
 }

@@ -1,3 +1,4 @@
+import Chess.ChineseDarkChess.DarkChess;
 import ChessGame.ChessGame;
 import ChessGame.ChineseDarkChessGame;
 import ChessGame.GomokuChessGame;
@@ -133,8 +134,8 @@ public class Main extends JFrame{
   private ChessGame bindSelectedGame() {
     String selectedItem = cmbGames.getSelectedItem().toString();
 
-    Player p1 = new Player(txtRedInput.getText());
-    Player p2 = new Player(txtBlackInput.getText());
+    Player p1 = new Player(txtRedInput.getText(), DarkChess.TEAM_RED);
+    Player p2 = new Player(txtBlackInput.getText(), DarkChess.TEAM_BLACK);
 
     if (selectedItem.equalsIgnoreCase("Chinese Dark Chess")) {
       return ChineseDarkChessGame.getInstance(p1, p2);

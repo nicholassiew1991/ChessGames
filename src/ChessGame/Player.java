@@ -1,11 +1,15 @@
 package ChessGame;
 
+import Chess.ChineseDarkChess.DarkChess;
+
 public class Player {
 
 	private String name;
+  private int side;
 
-	public Player(String name) {
+	public Player(String name, int side) {
 		this.setName(name);
+    this.side = side;
 	}
 
 	private void setName(String name) {
@@ -16,8 +20,13 @@ public class Player {
 		return this.name;
 	}
   
+  public int getSide() {
+    return this.side;
+  }
+  
   @Override
   public String toString() {
-    return this.name;
+    String sideColor = (this.side == DarkChess.TEAM_RED ? "Red" : "Black");
+    return String.format("%s Team: %s", this.name, sideColor);
   }
 }
