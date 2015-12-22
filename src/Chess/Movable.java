@@ -1,5 +1,5 @@
 package Chess;
 
 public interface Movable {
-  public void move();
+  public boolean move();
 }

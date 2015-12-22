@@ -26,8 +26,14 @@ public class ChineseDarkChessGame extends ChessGame {
 
   // <editor-fold defaultstate="collapsed" desc="Variables declaration">
   private DarkChessBoard dcb;
-	private Player p1, p2;
+  private Player p1, p2;
   private DarkChess RedChess[], BlackChess[];
+   
+  /* These variable is used to control the action after click the buttons. */
+  private DarkChess currentSelectChess = null;
+  private boolean isSelectChess = false;
+  private int currentSelectedX = -1;
+  private int currentSelectedY = -1;
   // </editor-fold>
 
   private JPanel container, northPanel, centerPanel;
@@ -127,7 +133,7 @@ public class ChineseDarkChessGame extends ChessGame {
         this.btnChesses[a][b].addActionListener(new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent e) {
-            boardButtonEvents(e);
+            chessButtonsEvent(e);
           }
         });
       }
@@ -141,17 +147,53 @@ public class ChineseDarkChessGame extends ChessGame {
 		this.p2 = p2;
 	}
   
-  private void boardButtonEvents(ActionEvent e) {
+  private void selectChess(DarkChess dc, int x, int y) {
+    this.isSelectChess = true;
+    currentSelectChess = dc;
+    currentSelectedX = x;
+    currentSelectedY = y;
+    System.out.println("Saved current button");
+  }
+  
+  private void deselectChess() {
+    this.isSelectChess = false;
+    this.currentSelectChess = null;
+    this.currentSelectedX = this.currentSelectedY = -1;
+    System.out.println("Unselected.");
+  }
+  
+  private void chessButtonsEvent(ActionEvent e) {
     int x = Integer.parseInt(e.getActionCommand().substring(0, 1));
     int y = Integer.parseInt(e.getActionCommand().substring(2));
     
     DarkChess dc = dcb.getChessOnLoc(x, y);
+      System.out.println(dc);
     
-    if (dc == null) {
-      return; // Do nothing
+    if (this.isSelectChess == false) {
+      if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
+          dc.setStatus(DarkChess.STATUS_FLIPPED);
+      }
+      else if (dc.getStatus() == DarkChess.STATUS_FLIPPED) {
+        selectChess(dc, x, y);
+      }
+    }
+    else {
+      if (x == this.currentSelectedX && y == this.currentSelectedY) {
+        deselectChess(); 
+      }
+      else {
+        if (dc == null) {
+          System.out.println("Move");
+          deselectChess();
+        }
+        else {
+          System.out.println("Eat");                
+          System.out.println(this.currentSelectChess.eat(dc));
+          deselectChess();
+        }
+      }
     }
     
-    dc.setStatus(DarkChess.STATUS_FLIPPED);
     drawButtonsImage();
   }
 }

@@ -10,8 +10,8 @@ public class Location {
   private Chess c;
   
   public Location(int x, int y) {
-    setX(x);
-    setY(y);
+    this.x = x;
+    this.y = y;
     this.c = null;
   }
 
@@ -19,16 +19,8 @@ public class Location {
     return x;
   }
 
-  private void setX(int x) {
-    this.x = x;
-  }
-
   public int getY() {
     return y;
-  }
-
-  private void setY(int y) {
-    this.y = y;
   }
 
   public Chess getChess() {

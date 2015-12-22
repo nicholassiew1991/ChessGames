@@ -3,6 +3,7 @@ package Chess.ChineseDarkChess;
 import Chess.Chess;
 import Chess.Eatable;
 import Chess.Movable;
+import ChessBoard.Location;
 import javax.swing.ImageIcon;
 
 public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
@@ -15,6 +16,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   
   public static final int STATUS_UNKNOWN = 1;
   public static final int STATUS_FLIPPED = 2;
+  public static final int STATUS_DEATH = 3;
 
   protected static final int SOLDIER_WEIGHT = 1;
   protected static final int GUN_WIEGHT = 2;
@@ -23,15 +25,11 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   protected static final int ELEPHANT_WEIGHT = 5;
   protected static final int SCHOLAR_WEIGHT = 6;
   protected static final int GENERAL_WEIGHT = 7;
-
-  public static final int MAXWEIGHT = 6;
-  public static final int MINWEIGHT = 0;
   
   private String name;
   private String imageFileName = null;
   private int team;
   private int weight;
-  private int movedistance;
   private int status;
 
   public DarkChess(String name, int team) {
@@ -57,19 +55,27 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   }
 
   @Override
-  public void eat(DarkChess c) {
+  public boolean eat(DarkChess c) {
     int targetWeight = c.getWeight();
     
     if (this.team == c.getTeam()) {
+      return false;
+      // can't eat
+    }
+    else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
+      return false;
       // can't eat
     }
     else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
+      return true;
       // eat
     }
     else if (weight >= targetWeight) {
+      return true;
       //eat
     }
     else {
+      return false;
       // Can't eat
     }
   }
@@ -87,21 +93,11 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   }
 
   protected void setWeight(int weight) {
-    if (checkWeight(weight)) {
-      this.weight = weight;
-    }
+    this.weight = weight;
   }
 
   public int getWeight() {
     return this.weight;
-  }
-  
-  private boolean checkWeight(int weight) {
-    if (weight >= MINWEIGHT && weight < MAXWEIGHT) {
-      return true;
-    } else {
-      return false;
-    }
   }
   
   private void setName(String name) {
@@ -125,15 +121,15 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   public int getTeam() {
     return team;
   }
-
-  @Override
-  public void move() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
-  
+   
   @Override
   public String toString() {
-    return String.format("Name: %s\nTeam: %d", name, team);
+    return String.format("Name: %s\nTeam: %d\nWeight: %d\n", name, team, weight);
   }
+
+    @Override
+    public boolean move() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

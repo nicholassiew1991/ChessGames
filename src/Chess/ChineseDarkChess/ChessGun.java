@@ -11,8 +11,5 @@ public class ChessGun extends DarkChess {
     super.setImagePath(IMG_RED_FILE_NAME, IMG_BLK_FILE_NAME);
   }
   
-  @Override
-  public void eat(DarkChess c) {
-    
-  }
+ 
 }

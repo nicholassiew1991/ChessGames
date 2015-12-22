@@ -1,5 +1,5 @@
 package Chess;
 
 public interface Eatable<T extends Chess> {
-  public void eat(T c);
+  public boolean eat(T c);
 }
