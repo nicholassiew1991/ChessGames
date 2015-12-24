@@ -3,7 +3,9 @@ package Chess.ChineseDarkChess;
 import Chess.Chess;
 import Chess.Eatable;
 import Chess.Movable;
+import ChessBoard.DarkChessBoard;
 import ChessBoard.Location;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
@@ -23,6 +25,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   public static final int EAT_FAILED_SAME_TEAM = 2;
   public static final int EAT_FAILED_UNKNOWN_CHESS = 3;
 
+  // <editor-fold defaultstate="collapsed" desc="Weight constants declaration. ">
   protected static final int SOLDIER_WEIGHT = 1;
   protected static final int GUN_WIEGHT = 2;
   protected static final int HORSE_WEIGHT = 3;
@@ -30,6 +33,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   protected static final int ELEPHANT_WEIGHT = 5;
   protected static final int SCHOLAR_WEIGHT = 6;
   protected static final int GENERAL_WEIGHT = 7;
+  // </editor-fold>
   
   private String name;
   private String imageFileName = null;
@@ -121,6 +125,26 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   public int getTeam() {
     return team;
   }
+  
+  public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int currentX, int currentY) {
+    ArrayList<Location> arr = new ArrayList();
+    
+    arr.add(new Location(currentX, currentY));
+    
+    if (currentX != 0) {
+      arr.add(new Location(currentX - 1, currentY));
+    }
+    if (currentX != dcb.getNumOfRows() - 1) {
+      arr.add(new Location(currentX + 1, currentY));
+    }
+    if (currentY != 0) {
+      arr.add(new Location(currentX, currentY - 1));
+    }
+    if (currentY != dcb.getNumOfCols() - 1) {
+      arr.add(new Location(currentX, currentY + 1));
+    }
+    return arr;
+  }
    
   @Override
   public String toString() {
@@ -129,6 +153,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
 
   @Override
   public boolean move() {
+    /* TODO: Try to invoke this method when move and eat. */
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
