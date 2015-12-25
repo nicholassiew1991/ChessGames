@@ -2,6 +2,8 @@ package ChessGame;
 
 import Chess.ChessMaker.DarkChessMaker;
 import Chess.ChineseDarkChess.DarkChess;
+import static Chess.ChineseDarkChess.DarkChess.TEAM_BLACK;
+import static Chess.ChineseDarkChess.DarkChess.TEAM_RED;
 import ChessBoard.DarkChessBoard;
 import ChessBoard.Location;
 import java.awt.BorderLayout;
@@ -248,11 +250,25 @@ public class ChineseDarkChessGame extends ChessGame {
         Location dest = new Location(x, y);
         if (dc == null) {
           currentSelectChess.move(dcb, src, dest);
+          changePlayerTurn();
         }
         else {
           if (this.currentSelectChess.eat(dc) == DarkChess.EAT_SUCCESS) {
             dc.setStatus(DarkChess.STATUS_DEATH);
             currentSelectChess.move(dcb, src, dest);
+            if(dc.getTeam() == TEAM_RED){
+                 p1.setTotalChess(p1.getTotalChess() - 1);
+                if(p1.getTotalChess() ==0 ){
+                    JOptionPane.showMessageDialog(null, "P2 Win");
+                }
+            }
+            if(dc.getTeam() == TEAM_BLACK){
+                 p2.setTotalChess(p2.getTotalChess() - 1);
+                if(p2.getTotalChess() ==0 ){
+                    JOptionPane.showMessageDialog(null, "P1 Win");
+                }
+            }
+            changePlayerTurn();
           }
         }
         enableButtons();
