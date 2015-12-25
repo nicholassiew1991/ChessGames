@@ -11,7 +11,7 @@ public class ChessGun extends DarkChess {
   
   public ChessGun(int team){
     super("Gun", team);
-    super.setWeight(GUN_WIEGHT);
+    super.setWeight(GUN_WEIGHT);
     super.setImagePath(IMG_RED_FILE_NAME, IMG_BLK_FILE_NAME);
   }
   
