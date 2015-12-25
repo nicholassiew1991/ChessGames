@@ -35,7 +35,6 @@ public class Player {
   
   @Override
   public String toString() {
-    String sideColor = (this.side == DarkChess.TEAM_RED ? "Red" : "Black");
-    return String.format("%s Team: %s", this.name, sideColor);
+    return String.format("%s", this.name);
   }
 }

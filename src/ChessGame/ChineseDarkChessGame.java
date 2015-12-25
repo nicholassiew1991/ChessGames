@@ -52,13 +52,13 @@ public class ChineseDarkChessGame extends ChessGame {
 
   private ChineseDarkChessGame(Player p1, Player p2) {
     dcb = new DarkChessBoard(DarkChessBoard.LANDSCAPE);
-    initGame(p1, p2);
-    initUI();
+    initialize(p1, p2);
   }
   // </editor-fold>
   
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
-  private void initGame(Player p1, Player p2) {
+  @Override
+  protected void initGame(Player p1, Player p2) {
     setPlayers(p1, p2);
     p1.setTotalChess(16);
     p2.setTotalChess(16);
@@ -101,7 +101,8 @@ public class ChineseDarkChessGame extends ChessGame {
     };
   }
 
-  private void initUI() {
+  @Override
+  protected void initUI() {
     super.initFrame(FRAME_TITLE, FRAME_WIDTH, FRAME_HEIGHT);
     initCointainer();
     drawButtonsImage();
