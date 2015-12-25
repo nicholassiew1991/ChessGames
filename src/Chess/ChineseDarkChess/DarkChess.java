@@ -28,7 +28,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
 
   // <editor-fold defaultstate="collapsed" desc="Weight constants declaration. ">
   protected static final int SOLDIER_WEIGHT = 1;
-  protected static final int GUN_WIEGHT = 2;
+  protected static final int GUN_WEIGHT = 2;
   protected static final int HORSE_WEIGHT = 3;
   protected static final int CAR_WEIGHT = 4;
   protected static final int ELEPHANT_WEIGHT = 5;
@@ -149,6 +149,12 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     }
     else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
       return EAT_SUCCESS;
+    }
+    else if (weight == GUN_WEIGHT ) {
+      return EAT_SUCCESS;
+    }
+    else if (weight == GENERAL_WEIGHT && targetWeight == SOLDIER_WEIGHT) {
+      return EAT_FAILED;
     }
     else if (weight >= targetWeight) {
       return EAT_SUCCESS;
