@@ -156,8 +156,8 @@ public class ChineseDarkChessGame extends ChessGame {
   
   private void changePlayerTurn() {
     this.currentTurnPlayer = (this.currentTurnPlayer == p1 ? p2 : p1);
-    String numOfChess = String.format("Red: %d Black: %d", p1.getTotalChess(), p2.getTotalChess());
-    this.lblTurn.setText(this.TURN + this.currentTurnPlayer + " " + numOfChess);
+    //String numOfChess = String.format("Red: %d Black: %d", p1.getTotalChess(), p2.getTotalChess());
+    this.lblTurn.setText(this.TURN + this.currentTurnPlayer);
   }
   
   private void selectChess(DarkChess dc, int x, int y) {
@@ -237,11 +237,8 @@ public class ChineseDarkChessGame extends ChessGame {
     DarkChess dc = dcb.getChessOnLoc(x, y);
     System.out.println(dc);
     
-    if (this.isSelectChess == false) {
-      if (dc == null) {
-        return;
-      }
-      else if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
+    if (this.isSelectChess == false && dc != null) {
+      if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
         dc.setStatus(DarkChess.STATUS_FLIPPED);
         changePlayerTurn();
         drawButtonsImage();
@@ -254,7 +251,7 @@ public class ChineseDarkChessGame extends ChessGame {
         disableButtons(dc.getClickableLocation(dcb, x, y));
       }
     }
-    else {
+    else if (this.isSelectChess == true && dc != null) {
       if (!(x == this.currentSelectedX && y == this.currentSelectedY)) {
         Location src = new Location(currentSelectedX, currentSelectedY);
         Location dest = new Location(x, y);

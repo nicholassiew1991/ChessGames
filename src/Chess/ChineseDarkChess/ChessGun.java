@@ -16,25 +16,36 @@ public class ChessGun extends DarkChess {
   }
   
   @Override
-  public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int currentX, int currentY) {
+  public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int x, int y) {
+    
     ArrayList<Location> arr = new ArrayList();
+    
+    Location[][] locInfo = dcb.getBoardInfo();
     
     int numOfRows = dcb.getNumOfRows();
     int numOfCols = dcb.getNumOfCols();
     
-    arr.add(new Location(currentX, currentY));
+    arr.add(new Location(x, y));
     
-    if (currentX >= 2) {
-      arr.add(new Location(currentX - 2, currentY));
+    if (x >= 2) {
+      if (locInfo[x - 1][y].getChess() != null) {
+        arr.add(new Location(x - 2, y));
+      }
     }
-    if (currentX <= ((numOfRows - 1) - 2)) {
-      arr.add(new Location(currentX + 2, currentY));
+    if (x <= ((numOfRows - 1) - 2)) {
+      if (locInfo[x + 1][y].getChess() != null) {
+          arr.add(new Location(x + 2, y));
+      }
     }
-    if (currentY >= 2) {
-      arr.add(new Location(currentX, currentY - 2));
+    if (y >= 2) {
+      if (locInfo[x][y - 1].getChess() != null) {
+        arr.add(new Location(x, y - 2));
+      }
     }
-    if (currentY <= ((numOfCols - 1) - 2)) {
-      arr.add(new Location(currentX, currentY + 2));
+    if (y <= ((numOfCols - 1) - 2)) {
+      if (locInfo[x][y + 1].getChess() != null) {
+        arr.add(new Location(x, y + 2));
+      }
     }
     
     return arr;

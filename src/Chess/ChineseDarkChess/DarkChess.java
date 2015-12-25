@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<DarkChessBoard> {
   
   private final String IMG_PATH = "res/img/ChineseDarkChess/";
+  //private final String IMG_PATH = "img/ChineseDarkChess/";
   private final String IMG_UNKNOWN = "unknown.jpg";
   
   public static final int TEAM_RED = 1;
@@ -106,22 +107,22 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     return team;
   }
   
-  public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int currentX, int currentY) {
+  public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int x, int y) {
     ArrayList<Location> arr = new ArrayList();
     
-    arr.add(new Location(currentX, currentY));
+    arr.add(new Location(x, y));
     
-    if (currentX != 0) {
-      arr.add(new Location(currentX - 1, currentY));
+    if (x != 0) {
+      arr.add(new Location(x - 1, y));
     }
-    if (currentX != dcb.getNumOfRows() - 1) {
-      arr.add(new Location(currentX + 1, currentY));
+    if (x != dcb.getNumOfRows() - 1) {
+      arr.add(new Location(x + 1, y));
     }
-    if (currentY != 0) {
-      arr.add(new Location(currentX, currentY - 1));
+    if (y != 0) {
+      arr.add(new Location(x, y - 1));
     }
-    if (currentY != dcb.getNumOfCols() - 1) {
-      arr.add(new Location(currentX, currentY + 1));
+    if (y != dcb.getNumOfCols() - 1) {
+      arr.add(new Location(x, y + 1));
     }
     return arr;
   }
