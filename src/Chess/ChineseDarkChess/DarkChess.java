@@ -147,10 +147,13 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
       return EAT_FAILED_UNKNOWN_CHESS;
     }
-    else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
-      return EAT_SUCCESS;
+    else if (weight == GENERAL_WEIGHT && targetWeight == SOLDIER_WEIGHT) {
+      return EAT_FAILED;
     }
     else if (weight == GUN_WEIGHT ) {
+      return EAT_SUCCESS;
+    }
+    else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
       return EAT_SUCCESS;
     }
     else if (weight == GENERAL_WEIGHT && targetWeight == SOLDIER_WEIGHT) {
@@ -170,10 +173,6 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     DarkChess destDC = cb.getChessOnLoc(dest.getX(), dest.getY());
     Location[][] loc = cb.getBoardInfo();
     
-    /*if (destDC != null) {
-      destDC.setStatus(DarkChess.STATUS_DEATH);
-    }*/
-    //loc[dest.getX()][dest.getY()] = loc[src.getX()][src.getY()];
     loc[dest.getX()][dest.getY()].setChess(cb.getChessOnLoc(src.getX(), src.getY()));
     loc[src.getX()][src.getY()].setChess(null);
   }

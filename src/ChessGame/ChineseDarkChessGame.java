@@ -2,8 +2,6 @@ package ChessGame;
 
 import Chess.ChessMaker.DarkChessMaker;
 import Chess.ChineseDarkChess.DarkChess;
-import static Chess.ChineseDarkChess.DarkChess.TEAM_BLACK;
-import static Chess.ChineseDarkChess.DarkChess.TEAM_RED;
 import ChessBoard.DarkChessBoard;
 import ChessBoard.Location;
 import java.awt.BorderLayout;
@@ -62,6 +60,8 @@ public class ChineseDarkChessGame extends ChessGame {
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
   private void initGame(Player p1, Player p2) {
     setPlayers(p1, p2);
+    p1.setTotalChess(16);
+    p2.setTotalChess(16);
     this.RedChess = getChesses(DarkChess.TEAM_RED);
     this.BlackChess = getChesses(DarkChess.TEAM_BLACK);
     dcb.placeChess(RedChess, BlackChess);
@@ -156,7 +156,8 @@ public class ChineseDarkChessGame extends ChessGame {
   
   private void changePlayerTurn() {
     this.currentTurnPlayer = (this.currentTurnPlayer == p1 ? p2 : p1);
-    this.lblTurn.setText(this.TURN + this.currentTurnPlayer);
+    String numOfChess = String.format("Red: %d Black: %d", p1.getTotalChess(), p2.getTotalChess());
+    this.lblTurn.setText(this.TURN + this.currentTurnPlayer + " " + numOfChess);
   }
   
   private void selectChess(DarkChess dc, int x, int y) {
@@ -217,6 +218,18 @@ public class ChineseDarkChessGame extends ChessGame {
     }
   }
   
+  private boolean checkPlayerWin(DarkChess dc) {
+    Player ply = (dc.getTeam() == DarkChess.TEAM_RED ? p1 : p2);
+    ply.setTotalChess(ply.getTotalChess() - 1);
+    
+    if (ply.getTotalChess() == 0) {
+      JOptionPane.showMessageDialog(null, ply.getName() + " Win!");
+      return true;
+    }
+    
+    return false;
+  }
+  
   private void chessButtonsEvent(ActionEvent e) {
     int x = Integer.parseInt(e.getActionCommand().substring(0, 1));
     int y = Integer.parseInt(e.getActionCommand().substring(2));
@@ -242,10 +255,7 @@ public class ChineseDarkChessGame extends ChessGame {
       }
     }
     else {
-      if (x == this.currentSelectedX && y == this.currentSelectedY) {
-        enableButtons();
-      }
-      else {
+      if (!(x == this.currentSelectedX && y == this.currentSelectedY)) {
         Location src = new Location(currentSelectedX, currentSelectedY);
         Location dest = new Location(x, y);
         if (dc == null) {
@@ -256,24 +266,15 @@ public class ChineseDarkChessGame extends ChessGame {
           if (this.currentSelectChess.eat(dc) == DarkChess.EAT_SUCCESS) {
             dc.setStatus(DarkChess.STATUS_DEATH);
             currentSelectChess.move(dcb, src, dest);
-            if(dc.getTeam() == TEAM_RED){
-                 p1.setTotalChess(p1.getTotalChess() - 1);
-                if(p1.getTotalChess() ==0 ){
-                    JOptionPane.showMessageDialog(null, "P2 Win");
-                }
-            }
-            if(dc.getTeam() == TEAM_BLACK){
-                 p2.setTotalChess(p2.getTotalChess() - 1);
-                if(p2.getTotalChess() ==0 ){
-                    JOptionPane.showMessageDialog(null, "P1 Win");
-                }
+            if (checkPlayerWin(dc) == true) {
+              return ;
             }
             changePlayerTurn();
           }
         }
-        enableButtons();
         drawButtonsImage();
       }
+      enableButtons();
       deselectChess();
     }
   }
