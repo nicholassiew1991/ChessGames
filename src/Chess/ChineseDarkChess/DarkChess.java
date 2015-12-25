@@ -3,12 +3,13 @@ package Chess.ChineseDarkChess;
 import Chess.Chess;
 import Chess.Eatable;
 import Chess.Movable;
+import ChessBoard.ChessBoard;
 import ChessBoard.DarkChessBoard;
 import ChessBoard.Location;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
+public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<DarkChessBoard> {
   
   private final String IMG_PATH = "res/img/ChineseDarkChess/";
   private final String IMG_UNKNOWN = "unknown.jpg";
@@ -61,27 +62,6 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
       path = this.IMG_PATH + this.imageFileName;
     }
     return new ImageIcon(path);
-  }
-
-  @Override
-  public int eat(DarkChess c) {
-    int targetWeight = c.getWeight();
-    
-    if (this.team == c.getTeam()) {
-      return EAT_FAILED_SAME_TEAM;
-    }
-    else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
-      return EAT_FAILED_UNKNOWN_CHESS;
-    }
-    else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
-      return EAT_SUCCESS;
-    }
-    else if (weight >= targetWeight) {
-      return EAT_SUCCESS;
-    }
-    else {
-      return EAT_FAILED;
-    }
   }
 
   public boolean invertChess() {
@@ -155,6 +135,41 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable {
   public boolean move() {
     /* TODO: Try to invoke this method when move and eat. */
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+  
+  @Override
+  public int eat(DarkChess c) {
+    int targetWeight = c.getWeight();
+    
+    if (this.team == c.getTeam()) {
+      return EAT_FAILED_SAME_TEAM;
+    }
+    else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
+      return EAT_FAILED_UNKNOWN_CHESS;
+    }
+    else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
+      return EAT_SUCCESS;
+    }
+    else if (weight >= targetWeight) {
+      return EAT_SUCCESS;
+    }
+    else {
+      return EAT_FAILED;
+    }
+  }
+
+  @Override
+  public void move(DarkChessBoard cb, Location src, Location dest) {
+    
+    DarkChess destDC = cb.getChessOnLoc(dest.getX(), dest.getY());
+    Location[][] loc = cb.getBoardInfo();
+    
+    /*if (destDC != null) {
+      destDC.setStatus(DarkChess.STATUS_DEATH);
+    }*/
+    //loc[dest.getX()][dest.getY()] = loc[src.getX()][src.getY()];
+    loc[dest.getX()][dest.getY()].setChess(cb.getChessOnLoc(src.getX(), src.getY()));
+    loc[src.getX()][src.getY()].setChess(null);
   }
 
 }

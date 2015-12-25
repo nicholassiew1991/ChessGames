@@ -36,9 +36,11 @@ public class ChineseDarkChessGame extends ChessGame {
   private int currentSelectedY = -1;
   // </editor-fold>
 
+  // <editor-fold defaultstate="collapsed" desc="UI components declaration">
   private JPanel container, northPanel, centerPanel;
   private JLabel lblTurn;
   private JButton btnChesses[][];
+  // </editor-fold>
   
   // <editor-fold defaultstate="collapsed" desc="Constructuors">
   public static ChessGame getInstance(Player p1, Player p2) {
@@ -171,21 +173,34 @@ public class ChineseDarkChessGame extends ChessGame {
   }
   
   public void disableButtons(ArrayList<Location> enableLoc) {
-    for (int a = 0; a < btnChesses.length; a++) {
+    for (int x = 0; x < btnChesses.length; x++) {
       nextChess:
-      for (int b = 0; b < btnChesses[a].length; b++) {
+      for (int y = 0; y < btnChesses[x].length; y++) {
         for (Location loc : enableLoc) {
-          if (a == loc.getX() && b == loc.getY()) {
-            if (dcb.getChessOnLoc(loc.getX(), loc.getY()).getStatus() == DarkChess.STATUS_UNKNOWN) {
-              btnChesses[a][b].setEnabled(false);
+          
+          int enabledX = loc.getX();
+          int enabledY = loc.getY();
+          
+          if (x == enabledX && y == enabledY) {
+            
+            DarkChess dc = dcb.getChessOnLoc(enabledX, enabledY);
+            
+            if (dc == null) {
+              btnChesses[x][y].setEnabled(true);
+            }
+            else if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
+              btnChesses[x][y].setEnabled(false);
+            }
+            else if (dc.getTeam() == currentSelectChess.getTeam() && !(x == this.currentSelectedX && y == this.currentSelectedY)) {
+              btnChesses[x][y].setEnabled(false);
             }
             else {
-              btnChesses[a][b].setEnabled(true);
+              btnChesses[x][y].setEnabled(true);
             }
             continue nextChess;
           }
           else {
-            btnChesses[a][b].setEnabled(false);
+            btnChesses[x][y].setEnabled(false);
           }
         }
       }
@@ -205,9 +220,13 @@ public class ChineseDarkChessGame extends ChessGame {
     int y = Integer.parseInt(e.getActionCommand().substring(2));
     
     DarkChess dc = dcb.getChessOnLoc(x, y);
+    System.out.println(dc);
     
     if (this.isSelectChess == false) {
-      if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
+      if (dc == null) {
+        return;
+      }
+      else if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
         dc.setStatus(DarkChess.STATUS_FLIPPED);
         changePlayerTurn();
         drawButtonsImage();
@@ -225,12 +244,16 @@ public class ChineseDarkChessGame extends ChessGame {
         enableButtons();
       }
       else {
+        Location src = new Location(currentSelectedX, currentSelectedY);
+        Location dest = new Location(x, y);
         if (dc == null) {
-          System.out.println("Move");
+          currentSelectChess.move(dcb, src, dest);
         }
         else {
-          System.out.println("Eat");                
-          System.out.println(this.currentSelectChess.eat(dc)); 
+          if (this.currentSelectChess.eat(dc) == DarkChess.EAT_SUCCESS) {
+            dc.setStatus(DarkChess.STATUS_DEATH);
+            currentSelectChess.move(dcb, src, dest);
+          }
         }
         enableButtons();
         drawButtonsImage();
