@@ -1,13 +1,13 @@
 package Chess.GomokuChess;
 
-public class GomokuChess {
+import Chess.Chess;
+
+public class GomokuChess extends Chess {
   
   public static final int TEAM_BLACK = 1;
   public static final int TEAM_WHITE = 2;
   
-  private int side;
-  
   public GomokuChess(int side) {
-    this.side = side;
+    super.setSide(side);
   }
 }

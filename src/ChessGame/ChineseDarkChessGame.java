@@ -26,7 +26,6 @@ public class ChineseDarkChessGame extends ChessGame {
 
   // <editor-fold defaultstate="collapsed" desc="Variables declaration">
   private DarkChessBoard dcb;
-  private Player p1, p2, currentTurnPlayer;
   private DarkChess RedChess[], BlackChess[];
   
   /* These variable is used to control the action after click the buttons. */
@@ -59,13 +58,13 @@ public class ChineseDarkChessGame extends ChessGame {
   // <editor-fold defaultstate="collapsed" desc="Initialize methods">
   @Override
   protected void initGame(Player p1, Player p2) {
-    setPlayers(p1, p2);
-    p1.setTotalChess(16);
-    p2.setTotalChess(16);
+    super.setPlayer(p1, p2);
+    this.p1.setTotalChess(16);
+    this.p2.setTotalChess(16);
     this.RedChess = getChesses(DarkChess.TEAM_RED);
     this.BlackChess = getChesses(DarkChess.TEAM_BLACK);
     dcb.placeChess(RedChess, BlackChess);
-    currentTurnPlayer = p1;
+    currentTurnPlayer = this.p1;
   }
   
   private void drawButtonsImage() {
@@ -149,17 +148,6 @@ public class ChineseDarkChessGame extends ChessGame {
     // </editor-fold>
   }
   // </editor-fold>
-
-	private void setPlayers(Player p1, Player p2) {
-		this.p1 = p1;
-		this.p2 = p2;
-	}
-  
-  private void changePlayerTurn() {
-    this.currentTurnPlayer = (this.currentTurnPlayer == p1 ? p2 : p1);
-    //String numOfChess = String.format("Red: %d Black: %d", p1.getTotalChess(), p2.getTotalChess());
-    this.lblTurn.setText(this.TURN + this.currentTurnPlayer);
-  }
   
   private void selectChess(DarkChess dc, int x, int y) {
     this.isSelectChess = true;
@@ -176,7 +164,7 @@ public class ChineseDarkChessGame extends ChessGame {
     System.out.println("Unselected.");
   }
   
-  public void disableButtons(ArrayList<Location> enableLoc) {
+  private void disableButtons(ArrayList<Location> enableLoc) {
     for (int x = 0; x < btnChesses.length; x++) {
       nextChess:
       for (int y = 0; y < btnChesses[x].length; y++) {
@@ -195,7 +183,7 @@ public class ChineseDarkChessGame extends ChessGame {
             else if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
               btnChesses[x][y].setEnabled(false);
             }
-            else if (dc.getTeam() == currentSelectChess.getTeam() && !(x == this.currentSelectedX && y == this.currentSelectedY)) {
+            else if (dc.getSide() == currentSelectChess.getSide() && !(x == this.currentSelectedX && y == this.currentSelectedY)) {
               btnChesses[x][y].setEnabled(false);
             }
             else {
@@ -211,7 +199,15 @@ public class ChineseDarkChessGame extends ChessGame {
     }
   }
   
-  public void enableButtons() {
+  private void disableButtons() {
+    for (JButton[] btnChesse : btnChesses) {
+      for (JButton btnChesse1 : btnChesse) {
+        btnChesse1.setEnabled(false);
+      }
+    }
+  }
+  
+  private void enableButtons() {
     for (JButton[] btnChesse : btnChesses) {
       for (JButton btnChesse1 : btnChesse) {
         btnChesse1.setEnabled(true);
@@ -220,11 +216,12 @@ public class ChineseDarkChessGame extends ChessGame {
   }
   
   private boolean checkPlayerWin(DarkChess dc) {
-    Player ply = (dc.getTeam() == DarkChess.TEAM_RED ? p1 : p2);
+    Player ply = (dc.getSide() == DarkChess.TEAM_RED ? p1 : p2);
     ply.setTotalChess(ply.getTotalChess() - 1);
     
     if (ply.getTotalChess() == 0) {
-      JOptionPane.showMessageDialog(null, ply.getName() + " Win!");
+      Player eater = (dc.getSide() == DarkChess.TEAM_RED ? p2 : p1);
+      JOptionPane.showMessageDialog(null, eater.getName() + " Win!");
       return true;
     }
     
@@ -241,10 +238,10 @@ public class ChineseDarkChessGame extends ChessGame {
     if (this.isSelectChess == false && dc != null) {
       if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
         dc.setStatus(DarkChess.STATUS_FLIPPED);
-        changePlayerTurn();
+        lblTurn.setText(changePlayerTurns());
         drawButtonsImage();
       }
-      else if (dc.getTeam() != currentTurnPlayer.getSide()) {
+      else if (dc.getSide() != currentTurnPlayer.getSide()) {
         JOptionPane.showMessageDialog(null, "Please select your's side chess.");
       }
       else if (dc.getStatus() == DarkChess.STATUS_FLIPPED) {
@@ -252,22 +249,24 @@ public class ChineseDarkChessGame extends ChessGame {
         disableButtons(dc.getClickableLocation(dcb, x, y));
       }
     }
-    else if (this.isSelectChess == true && dc != null) {
+    else if (this.isSelectChess == true) {
       if (!(x == this.currentSelectedX && y == this.currentSelectedY)) {
         Location src = new Location(currentSelectedX, currentSelectedY);
         Location dest = new Location(x, y);
         if (dc == null) {
           currentSelectChess.move(dcb, src, dest);
-          changePlayerTurn();
+          lblTurn.setText(changePlayerTurns());
         }
         else {
           if (this.currentSelectChess.eat(dc) == DarkChess.EAT_SUCCESS) {
             dc.setStatus(DarkChess.STATUS_DEATH);
             currentSelectChess.move(dcb, src, dest);
+            drawButtonsImage();
             if (checkPlayerWin(dc) == true) {
+              disableButtons();
               return ;
             }
-            changePlayerTurn();
+            lblTurn.setText(changePlayerTurns());
           }
         }
         drawButtonsImage();

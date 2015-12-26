@@ -139,8 +139,8 @@ public class Main extends JFrame{
     Player p2 = null;
 
     if (selectedItem.equalsIgnoreCase("Chinese Dark Chess")) {
-      p1 = new Player(txtRedInput.getText(), DarkChess.TEAM_RED);
-      p2 = new Player(txtBlackInput.getText(), DarkChess.TEAM_BLACK);
+      p1 = new Player(txtRedInput.getText() + " (RED)", DarkChess.TEAM_RED);
+      p2 = new Player(txtBlackInput.getText() + " (BLACK)", DarkChess.TEAM_BLACK);
       return ChineseDarkChessGame.getInstance(p1, p2);
     }
     else if (selectedItem.equalsIgnoreCase("Gomoku")) {

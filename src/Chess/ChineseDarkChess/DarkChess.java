@@ -39,18 +39,17 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   
   private String name;
   private String imageFileName = null;
-  private int team;
   private int weight;
   private int status;
 
   public DarkChess(String name, int team) {
     this.setName(name);
-    this.setTeam(team);
+    super.setSide(team);
     this.setStatus(STATUS_UNKNOWN);
   }
   
   protected void setImagePath(String red, String black) {
-    imageFileName = (team == TEAM_RED ? red : black);
+    imageFileName = (side == TEAM_RED ? red : black);
   }
   
   public ImageIcon getChessImage() {
@@ -63,10 +62,6 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
       path = this.IMG_PATH + this.imageFileName;
     }
     return new ImageIcon(path);
-  }
-
-  public boolean invertChess() {
-    return true;
   }
   
   public void setStatus(int status) {
@@ -92,20 +87,6 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   public String getName() {
     return this.name;
   }
-
-  private boolean setTeam(int team) {
-    if (team == TEAM_RED || team == TEAM_BLACK) {
-      this.team = team;
-      return true;
-    }
-    else {
-      return false;
-    }
-  }
-  
-  public int getTeam() {
-    return team;
-  }
   
   public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int x, int y) {
     ArrayList<Location> arr = new ArrayList();
@@ -128,21 +109,10 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   }
    
   @Override
-  public String toString() {
-    return String.format("Name: %s\nTeam: %d\nWeight: %d\n", name, team, weight);
-  }
-
-  @Override
-  public boolean move() {
-    /* TODO: Try to invoke this method when move and eat. */
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
-  
-  @Override
   public int eat(DarkChess c) {
     int targetWeight = c.getWeight();
     
-    if (this.team == c.getTeam()) {
+    if (this.side == c.getSide()) {
       return EAT_FAILED_SAME_TEAM;
     }
     else if (c.getStatus() == DarkChess.STATUS_UNKNOWN) {
@@ -171,11 +141,15 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   @Override
   public void move(DarkChessBoard cb, Location src, Location dest) {
     
-    DarkChess destDC = cb.getChessOnLoc(dest.getX(), dest.getY());
     Location[][] loc = cb.getBoardInfo();
     
     loc[dest.getX()][dest.getY()].setChess(cb.getChessOnLoc(src.getX(), src.getY()));
     loc[src.getX()][src.getY()].setChess(null);
+  }
+  
+  @Override
+  public String toString() {
+    return String.format("Name: %s\nTeam: %d\nWeight: %d\n", name, side, weight);
   }
 
 }

@@ -4,9 +4,8 @@ import javax.swing.JFrame;
 
 public abstract class ChessGame {
   
-  private Player pp1, pp2;
-  
-  protected Player currentTurnPlayer1;
+  protected Player p1, p2;
+  protected Player currentTurnPlayer;
   
   protected static ChessGame cg = null;
   
@@ -30,15 +29,20 @@ public abstract class ChessGame {
     cgFrame.setVisible(true);
   }
   
-  protected void setPlayer(Player p1, Player p2) {
-    this.pp1 = p1;
-    this.pp2 = p2;
-  }
-  
   protected void initialize(Player p1, Player p2) {
     initGame(p1, p2);
-    currentTurnPlayer1 = p1;
+    currentTurnPlayer = p1;
     initUI();
+  }
+  
+  protected void setPlayer(Player p1, Player p2) {
+    this.p1 = p1;
+    this.p2 = p2;
+  }
+  
+  protected String changePlayerTurns() {
+    this.currentTurnPlayer = (this.currentTurnPlayer == p1 ? p2 : p1);
+    return "Turn: " + this.currentTurnPlayer;
   }
   
   protected abstract void initGame(Player p1, Player p2);
