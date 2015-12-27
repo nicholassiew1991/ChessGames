@@ -7,6 +7,7 @@ import ChessBoard.ChessBoard;
 import ChessBoard.DarkChessBoard;
 import ChessBoard.Location;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<DarkChessBoard> {
@@ -24,8 +25,10 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   
   public static final int EAT_SUCCESS = 0;
   public static final int EAT_FAILED = 1;
-  public static final int EAT_FAILED_SAME_TEAM = 2;
-  public static final int EAT_FAILED_UNKNOWN_CHESS = 3;
+  public static final int EAT_FAILED_WEIGHT_SMALLER = 2;
+  public static final int EAT_FAILED_GENERAL_EAT_SOLDIER = 3;
+  public static final int EAT_FAILED_SAME_TEAM = 4;
+  public static final int EAT_FAILED_UNKNOWN_CHESS = 5;
 
   // <editor-fold defaultstate="collapsed" desc="Weight constants declaration. ">
   protected static final int SOLDIER_WEIGHT = 1;
@@ -37,6 +40,8 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   protected static final int GENERAL_WEIGHT = 7;
   // </editor-fold>
   
+  private HashMap<Integer, String> hmEatMessage;
+  
   private String name;
   private String imageFileName = null;
   private int weight;
@@ -46,6 +51,20 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     this.setName(name);
     super.setSide(team);
     this.setStatus(STATUS_UNKNOWN);
+    initEatMessage();
+  }
+  
+  private void initEatMessage() {
+    hmEatMessage = new HashMap();
+    hmEatMessage.put(EAT_FAILED, "Eat Failed.");
+    hmEatMessage.put(EAT_FAILED_WEIGHT_SMALLER, "Your weight is smaller.");
+    hmEatMessage.put(EAT_FAILED_GENERAL_EAT_SOLDIER, "General can't eat soldier.");
+    hmEatMessage.put(EAT_FAILED_SAME_TEAM, "Can't eat your team chess.");
+    hmEatMessage.put(EAT_FAILED_UNKNOWN_CHESS, "The chess hasn't flip yet.");
+  }
+  
+  public String getEatMessage(int code) {
+    return hmEatMessage.get(code);
   }
   
   protected void setImagePath(String red, String black) {
@@ -119,7 +138,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
       return EAT_FAILED_UNKNOWN_CHESS;
     }
     else if (weight == GENERAL_WEIGHT && targetWeight == SOLDIER_WEIGHT) {
-      return EAT_FAILED;
+      return EAT_FAILED_GENERAL_EAT_SOLDIER;
     }
     else if (weight == GUN_WEIGHT ) {
       return EAT_SUCCESS;
@@ -127,11 +146,11 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     else if (weight == SOLDIER_WEIGHT && targetWeight == GENERAL_WEIGHT) {
       return EAT_SUCCESS;
     }
-    else if (weight == GENERAL_WEIGHT && targetWeight == SOLDIER_WEIGHT) {
-      return EAT_FAILED;
-    }
     else if (weight >= targetWeight) {
       return EAT_SUCCESS;
+    }
+    else if (weight < targetWeight) {
+      return EAT_FAILED_WEIGHT_SMALLER;
     }
     else {
       return EAT_FAILED;
@@ -141,7 +160,9 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   @Override
   public void move(DarkChessBoard cb, Location src, Location dest) {
     
+    // TODO: Can use setChessOnLoc
     Location[][] loc = cb.getBoardInfo();
+    
     
     loc[dest.getX()][dest.getY()].setChess(cb.getChessOnLoc(src.getX(), src.getY()));
     loc[src.getX()][src.getY()].setChess(null);

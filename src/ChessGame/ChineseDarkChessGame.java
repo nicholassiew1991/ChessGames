@@ -22,7 +22,6 @@ public class ChineseDarkChessGame extends ChessGame {
   private final int FRAME_HEIGHT = 400;
 
   private final String FRAME_TITLE = "Chinese Dark Chess";
-  private final String TURN = "Turn: ";
   // </editor-fold>
 
   // <editor-fold defaultstate="collapsed" desc="Variables declaration">
@@ -71,7 +70,7 @@ public class ChineseDarkChessGame extends ChessGame {
   private void drawButtonsImage() {
     for (int a = 0; a < this.btnChesses.length; a++) {
       for (int b = 0; b < this.btnChesses[a].length; b++) {
-        DarkChess dc = dcb.getChessOnLoc(a, b);
+        DarkChess dc = (DarkChess) dcb.getChessOnLoc(a, b);
         this.btnChesses[a][b].setIcon((dc == null ? null : dc.getChessImage()));
       }
     }
@@ -176,7 +175,7 @@ public class ChineseDarkChessGame extends ChessGame {
           
           if (x == enabledX && y == enabledY) {
             
-            DarkChess dc = dcb.getChessOnLoc(enabledX, enabledY);
+            DarkChess dc = (DarkChess) dcb.getChessOnLoc(enabledX, enabledY);
             
             if (dc == null) {
               btnChesses[x][y].setEnabled(true);
@@ -234,7 +233,7 @@ public class ChineseDarkChessGame extends ChessGame {
     int x = coordinate.get("x");
     int y = coordinate.get("y");
     
-    DarkChess dc = dcb.getChessOnLoc(x, y);
+    DarkChess dc = (DarkChess) dcb.getChessOnLoc(x, y);
     System.out.println(dc);
     
     if (this.isSelectChess == false && dc != null) {
@@ -260,7 +259,8 @@ public class ChineseDarkChessGame extends ChessGame {
           lblTurn.setText(changePlayerTurns());
         }
         else {
-          if (this.currentSelectChess.eat(dc) == DarkChess.EAT_SUCCESS) {
+          int retEatVal = this.currentSelectChess.eat(dc);
+          if (retEatVal == DarkChess.EAT_SUCCESS) {
             dc.setStatus(DarkChess.STATUS_DEATH);
             currentSelectChess.move(dcb, src, dest);
             drawButtonsImage();
@@ -269,6 +269,9 @@ public class ChineseDarkChessGame extends ChessGame {
               return ;
             }
             lblTurn.setText(changePlayerTurns());
+          }
+          else {
+            JOptionPane.showMessageDialog(null, dc.getEatMessage(retEatVal));
           }
         }
         drawButtonsImage();

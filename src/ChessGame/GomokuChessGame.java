@@ -113,8 +113,8 @@ public class GomokuChessGame extends ChessGame {
           if(a > 14 ){
               return false;
           }
-          if(gcb.getChessOnLocation(a, y) != null &&  gcb.getChessOnLocation(a+1, y) != null && gcb.getChessOnLocation(a+2, y) != null && gcb.getChessOnLocation(a+3, y) != null && gcb.getChessOnLocation(a+4, y) != null){
-              if(gcb.getChessOnLocation(a, y).getSide() == team && gcb.getChessOnLocation(a+1, y).getSide() == team && gcb.getChessOnLocation(a+2, y).getSide() == team && gcb.getChessOnLocation(a+3, y).getSide() == team && gcb.getChessOnLocation(a+4, y).getSide() == team){
+          if(gcb.getChessOnLoc(a, y) != null &&  gcb.getChessOnLoc(a+1, y) != null && gcb.getChessOnLoc(a+2, y) != null && gcb.getChessOnLoc(a+3, y) != null && gcb.getChessOnLoc(a+4, y) != null){
+              if(gcb.getChessOnLoc(a, y).getSide() == team && gcb.getChessOnLoc(a+1, y).getSide() == team && gcb.getChessOnLoc(a+2, y).getSide() == team && gcb.getChessOnLoc(a+3, y).getSide() == team && gcb.getChessOnLoc(a+4, y).getSide() == team){
                   return true;
               }
           }
@@ -128,8 +128,8 @@ public class GomokuChessGame extends ChessGame {
               if(b > 14 ){
                   return false;
               }
-              if(gcb.getChessOnLocation(x, b) != null &&  gcb.getChessOnLocation(x, b+1) != null && gcb.getChessOnLocation(x, b+2) != null && gcb.getChessOnLocation(x, b+3) != null && gcb.getChessOnLocation(x, b+4) != null){
-                  if(gcb.getChessOnLocation(x, b).getSide() == team && gcb.getChessOnLocation(x, b + 1).getSide() == team && gcb.getChessOnLocation(x, b+2).getSide() == team && gcb.getChessOnLocation(x, b+3).getSide() == team && gcb.getChessOnLocation(x, b+4).getSide() == team){
+              if(gcb.getChessOnLoc(x, b) != null &&  gcb.getChessOnLoc(x, b+1) != null && gcb.getChessOnLoc(x, b+2) != null && gcb.getChessOnLoc(x, b+3) != null && gcb.getChessOnLoc(x, b+4) != null){
+                  if(gcb.getChessOnLoc(x, b).getSide() == team && gcb.getChessOnLoc(x, b + 1).getSide() == team && gcb.getChessOnLoc(x, b+2).getSide() == team && gcb.getChessOnLoc(x, b+3).getSide() == team && gcb.getChessOnLoc(x, b+4).getSide() == team){
                       return true;
                   }
               }
@@ -144,10 +144,10 @@ public class GomokuChessGame extends ChessGame {
     int x = coordinate.get("x");
     int y = coordinate.get("y");
     
-    GomokuChess gc = gcb.getChessOnLocation(x, y);
+    GomokuChess gc = (GomokuChess) gcb.getChessOnLoc(x, y);
     
     if (gc == null) {
-      gcb.setChessOnLocation(this.getChess(super.currentTurnPlayer), x, y);
+      gcb.setChessOnLoc(this.getChess(super.currentTurnPlayer), x, y);
       System.out.println(x + " " + y);
       drawButtons();
       if(checkVictory(this.getChess(super.currentTurnPlayer).getSide(),x,y) == true){
@@ -164,7 +164,7 @@ public class GomokuChessGame extends ChessGame {
     
     for (int a = 0; a < btnChesses.length; a++) {
       for (int b = 0; b < btnChesses[a].length; b++) {
-        GomokuChess gc = gcb.getChessOnLocation(a, b);
+        GomokuChess gc = (GomokuChess) gcb.getChessOnLoc(a, b);
         btnChesses[a][b].setIcon((gc == null) ? emptyIcon : gc.getChessImage());
       }
     }

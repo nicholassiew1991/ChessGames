@@ -1,5 +1,6 @@
 package ChessBoard;
 
+import Chess.Chess;
 import Chess.ChineseDarkChess.DarkChess;
 import Utilities.Util;
 import java.awt.GridLayout;
@@ -14,8 +15,6 @@ public class DarkChessBoard extends ChessBoard {
 
   public static final int LANDSCAPE = 1;
   public static final int POTRAIT = 2;
-
-  private Location[][] locOnBoard;
 
   private int layout;
 
@@ -50,9 +49,7 @@ public class DarkChessBoard extends ChessBoard {
     // Potrait not available yet.
     // If layout value is unexpected, then set it to landscape
     this.layout = (layout == POTRAIT ? LANDSCAPE : LANDSCAPE);
-    this.locOnBoard = new Location[getNumOfRows()][getNumOfCols()];
-    
-    initLocOnBoard();
+    initLocOnBoard(getNumOfRows(), getNumOfCols());
   }
 
   public GridLayout getLayout() {
@@ -65,25 +62,5 @@ public class DarkChessBoard extends ChessBoard {
   
   public int getNumOfCols() {
     return (layout == LANDSCAPE ? LANDSCAPE_COL : POTRAIT_COL);
-  }
-
-  public Location[][] getBoardInfo() {
-    return this.locOnBoard;
-  }
-  
-  private void initLocOnBoard() {
-    for (int a = 0; a < locOnBoard.length; a++) {
-      for (int b = 0; b < locOnBoard[a].length; b++) {
-        locOnBoard[a][b] = new Location(a, b);
-      }
-    }
-  }
-  
-  public void setChessOnLoc(DarkChess dc, int x, int y) {
-    locOnBoard[x][y].setChess(dc);
-  }
-  
-  public DarkChess getChessOnLoc(int x, int y) {
-    return (DarkChess) locOnBoard[x][y].getChess();
   }
 }
