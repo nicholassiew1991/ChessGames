@@ -2,6 +2,7 @@ package ChessGame;
 
 import Chess.ChessMaker.GomokuChessMaker;
 import Chess.GomokuChess.GomokuChess;
+import static Chess.GomokuChess.GomokuChess.TEAM_BLACK;
 import ChessBoard.GomokuChessBoard;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -102,7 +103,41 @@ public class GomokuChessGame extends ChessGame {
     }
   }
   // </editor-fold>
-  
+  private boolean checkVictory(int team,int x,int y){
+      int a,b;
+      //判斷直行的狀況
+      for(a = x-4 ; a <= x+4 ; a++ ){
+          if(a < 0){
+              a = 0;
+          }
+          if(a > 14 ){
+              return false;
+          }
+          if(gcb.getChessOnLocation(a, y) != null &&  gcb.getChessOnLocation(a+1, y) != null && gcb.getChessOnLocation(a+2, y) != null && gcb.getChessOnLocation(a+3, y) != null && gcb.getChessOnLocation(a+4, y) != null){
+              if(gcb.getChessOnLocation(a, y).getSide() == team && gcb.getChessOnLocation(a+1, y).getSide() == team && gcb.getChessOnLocation(a+2, y).getSide() == team && gcb.getChessOnLocation(a+3, y).getSide() == team && gcb.getChessOnLocation(a+4, y).getSide() == team){
+                  return true;
+              }
+          }
+      }
+      //判斷衡型的狀況
+   
+          for(b = y-4 ;b <= y+4 ; b++ ){
+              if(b < 0){
+                  b = 0;
+              }
+              if(b > 14 ){
+                  return false;
+              }
+              if(gcb.getChessOnLocation(x, b) != null &&  gcb.getChessOnLocation(x, b+1) != null && gcb.getChessOnLocation(x, b+2) != null && gcb.getChessOnLocation(x, b+3) != null && gcb.getChessOnLocation(x, b+4) != null){
+                  if(gcb.getChessOnLocation(x, b).getSide() == team && gcb.getChessOnLocation(x, b + 1).getSide() == team && gcb.getChessOnLocation(x, b+2).getSide() == team && gcb.getChessOnLocation(x, b+3).getSide() == team && gcb.getChessOnLocation(x, b+4).getSide() == team){
+                      return true;
+                  }
+              }
+          }
+      
+    
+      return false;
+  }
   // <editor-fold defaultstate="collapsed" desc="Actions">
   private void chessButtonActions(ActionEvent e) {
     HashMap<String, Integer> coordinate = super.getCoordinates(e.getActionCommand());
@@ -113,7 +148,11 @@ public class GomokuChessGame extends ChessGame {
     
     if (gc == null) {
       gcb.setChessOnLocation(this.getChess(super.currentTurnPlayer), x, y);
+      System.out.println(x + " " + y);
       drawButtons();
+      if(checkVictory(this.getChess(super.currentTurnPlayer).getSide(),x,y) == true){
+          System.out.println(this.getChess(super.currentTurnPlayer).getSide() + " Vectory");
+      }
       lblTurn.setText(super.changePlayerTurns());
     }
   }

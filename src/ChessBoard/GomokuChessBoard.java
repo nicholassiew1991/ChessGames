@@ -11,6 +11,7 @@ public class GomokuChessBoard extends ChessBoard {
   private Location[][] locOnBoard;
   
   public GomokuChessBoard() {
+      
     this.initLocOnBoard();
   }
   
