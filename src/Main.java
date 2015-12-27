@@ -144,8 +144,8 @@ public class Main extends JFrame{
       return ChineseDarkChessGame.getInstance(p1, p2);
     }
     else if (selectedItem.equalsIgnoreCase("Gomoku")) {
-      p1 = new Player(txtRedInput.getText(), GomokuChess.TEAM_BLACK);
-      p2 = new Player(txtBlackInput.getText(), GomokuChess.TEAM_WHITE);
+      p1 = new Player(txtRedInput.getText()  + " (BLACK)", GomokuChess.TEAM_BLACK);
+      p2 = new Player(txtBlackInput.getText()  + " (WHITE)", GomokuChess.TEAM_WHITE);
       return GomokuChessGame.getInstance(p1, p2);
     }
 

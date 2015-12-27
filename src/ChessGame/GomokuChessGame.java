@@ -4,18 +4,19 @@ import Chess.ChessMaker.GomokuChessMaker;
 import Chess.GomokuChess.GomokuChess;
 import ChessBoard.GomokuChessBoard;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GomokuChessGame extends ChessGame {
 
-  private final int FRAME_WIDTH = 800;
-  private final int FRAME_HEIGHT = 800;
+  private final int FRAME_WIDTH = 1000;
+  private final int FRAME_HEIGHT = 1000;
   private final String FRAME_TITLE = "Gomoku Chess";
   
   private GomokuChessBoard gcb;
@@ -55,6 +56,7 @@ public class GomokuChessGame extends ChessGame {
   protected void initUI() {
     super.initFrame(FRAME_TITLE, FRAME_WIDTH, FRAME_HEIGHT);
     initCointainer();
+    drawButtons();
   }
   
   private void initCointainer() {
@@ -103,7 +105,29 @@ public class GomokuChessGame extends ChessGame {
   
   // <editor-fold defaultstate="collapsed" desc="Actions">
   private void chessButtonActions(ActionEvent e) {
-    System.out.println(e.getActionCommand());
+    HashMap<String, Integer> coordinate = super.getCoordinates(e.getActionCommand());
+    int x = coordinate.get("x");
+    int y = coordinate.get("y");
+    
+    GomokuChess gc = gcb.getChessOnLocation(x, y);
+    
+    if (gc == null) {
+      gcb.setChessOnLocation(this.getChess(super.currentTurnPlayer), x, y);
+      drawButtons();
+      lblTurn.setText(super.changePlayerTurns());
+    }
   }
   // </editor-fold>
+  
+  private void drawButtons() {
+    
+    ImageIcon emptyIcon = new ImageIcon(GomokuChess.IMG_PATH + GomokuChess.EMPTY_FILE);
+    
+    for (int a = 0; a < btnChesses.length; a++) {
+      for (int b = 0; b < btnChesses[a].length; b++) {
+        GomokuChess gc = gcb.getChessOnLocation(a, b);
+        btnChesses[a][b].setIcon((gc == null) ? emptyIcon : gc.getChessImage());
+      }
+    }
+  }
 }

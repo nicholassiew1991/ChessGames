@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -229,8 +230,9 @@ public class ChineseDarkChessGame extends ChessGame {
   }
   
   private void chessButtonsEvent(ActionEvent e) {
-    int x = Integer.parseInt(e.getActionCommand().substring(0, 1));
-    int y = Integer.parseInt(e.getActionCommand().substring(2));
+    HashMap<String, Integer> coordinate = super.getCoordinates(e.getActionCommand());
+    int x = coordinate.get("x");
+    int y = coordinate.get("y");
     
     DarkChess dc = dcb.getChessOnLoc(x, y);
     System.out.println(dc);
