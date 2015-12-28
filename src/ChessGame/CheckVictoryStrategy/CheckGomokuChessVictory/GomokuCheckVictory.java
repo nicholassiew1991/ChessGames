@@ -5,22 +5,13 @@ import ChessBoard.ChessBoard;
 import ChessBoard.GomokuChessBoard;
 import ChessGame.CheckVictoryStrategy.CheckVictoryStrategy;
 
-public interface GomokuCheckVictory extends CheckVictoryStrategy {}
-
-class GomokuCheckVictoryUp implements GomokuCheckVictory {
-
-  @Override
-  public boolean checkVitory(ChessBoard gcb, int x, int y) {
-    if (x < 4) {
-      return false;
-    }
-    
-    GomokuChess gc = (GomokuChess) gcb.getChessOnLoc(x, y);
-    
-    int countContinuous = 1;
-    
-    
-    return true;
+public abstract class GomokuCheckVictory implements CheckVictoryStrategy<GomokuChessBoard> {
+  
+  protected int getPreCheckRow() {
+    return GomokuChessBoard.LAYOUT_ROW - 5;
   }
   
+  protected int getPreCheckCol() {
+    return GomokuChessBoard.LAYOUT_COL - 5;
+  }
 }

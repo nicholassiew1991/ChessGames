@@ -1,6 +1,5 @@
 package ChessBoard;
 
-import Chess.Chess;
 import Chess.ChineseDarkChess.DarkChess;
 import Utilities.Util;
 import java.awt.GridLayout;

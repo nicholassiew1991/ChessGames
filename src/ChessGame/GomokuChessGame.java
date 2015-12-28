@@ -2,8 +2,8 @@ package ChessGame;
 
 import Chess.ChessMaker.GomokuChessMaker;
 import Chess.GomokuChess.GomokuChess;
-import static Chess.GomokuChess.GomokuChess.TEAM_BLACK;
 import ChessBoard.GomokuChessBoard;
+import ChessGame.CheckVictoryStrategy.CheckGomokuChessVictory.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -103,8 +103,16 @@ public class GomokuChessGame extends ChessGame {
     }
   }
   // </editor-fold>
-  private boolean checkVictory(int team,int x,int y){
-      int a,b;
+  
+  private boolean checkVictory(int team, int x, int y){
+    new GomokuCheckVictoryUp().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryDown().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryLeft().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryRight().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryUpperLeft().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryUpperRight().checkVitory(gcb, x, y);
+    new GomokuCheckVictoryBottomLeft().checkVitory(gcb, x, y);
+      /*int a,b;
       //判斷直行的狀況
       for(a = x-4 ; a <= x+4 ; a++ ){
           if(a < 0){
@@ -136,6 +144,7 @@ public class GomokuChessGame extends ChessGame {
           }
       
     
+      return false;*/
       return false;
   }
   // <editor-fold defaultstate="collapsed" desc="Actions">
