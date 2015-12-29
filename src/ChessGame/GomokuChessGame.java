@@ -3,7 +3,7 @@ package ChessGame;
 import Chess.ChessMaker.GomokuChessMaker;
 import Chess.GomokuChess.GomokuChess;
 import ChessBoard.GomokuChessBoard;
-import ChessGame.CheckVictoryStrategy.CheckGomokuChessVictory.*;
+//import ChessGame.CheckVictoryStrategy.CheckGomokuChessVictory.*;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -105,6 +105,7 @@ public class GomokuChessGame extends ChessGame {
   // </editor-fold>
   
   private boolean checkVictory(int team, int x, int y){
+	  /*
     new GomokuCheckVictoryUp().checkVitory(gcb, x, y);
     new GomokuCheckVictoryDown().checkVitory(gcb, x, y);
     new GomokuCheckVictoryLeft().checkVitory(gcb, x, y);
@@ -112,39 +113,108 @@ public class GomokuChessGame extends ChessGame {
     new GomokuCheckVictoryUpperLeft().checkVitory(gcb, x, y);
     new GomokuCheckVictoryUpperRight().checkVitory(gcb, x, y);
     new GomokuCheckVictoryBottomLeft().checkVitory(gcb, x, y);
-      /*int a,b;
+	*/
+      int a,b;
       //判斷直行的狀況
-      for(a = x-4 ; a <= x+4 ; a++ ){
-          if(a < 0){
-              a = 0;
-          }
-          if(a > 14 ){
-              return false;
-          }
-          if(gcb.getChessOnLoc(a, y) != null &&  gcb.getChessOnLoc(a+1, y) != null && gcb.getChessOnLoc(a+2, y) != null && gcb.getChessOnLoc(a+3, y) != null && gcb.getChessOnLoc(a+4, y) != null){
-              if(gcb.getChessOnLoc(a, y).getSide() == team && gcb.getChessOnLoc(a+1, y).getSide() == team && gcb.getChessOnLoc(a+2, y).getSide() == team && gcb.getChessOnLoc(a+3, y).getSide() == team && gcb.getChessOnLoc(a+4, y).getSide() == team){
-                  return true;
+	  
+	  if(x <10 ){
+	      for(a = x-4 ; a <= x+4 ; a++ ){
+              if(a < 0){
+                  a = 0;
               }
-          }
-      }
-      //判斷衡型的狀況
-   
-          for(b = y-4 ;b <= y+4 ; b++ ){
-              if(b < 0){
-                  b = 0;
-              }
-              if(b > 14 ){
-                  return false;
-              }
-              if(gcb.getChessOnLoc(x, b) != null &&  gcb.getChessOnLoc(x, b+1) != null && gcb.getChessOnLoc(x, b+2) != null && gcb.getChessOnLoc(x, b+3) != null && gcb.getChessOnLoc(x, b+4) != null){
-                  if(gcb.getChessOnLoc(x, b).getSide() == team && gcb.getChessOnLoc(x, b + 1).getSide() == team && gcb.getChessOnLoc(x, b+2).getSide() == team && gcb.getChessOnLoc(x, b+3).getSide() == team && gcb.getChessOnLoc(x, b+4).getSide() == team){
+              if(gcb.getChessOnLocation(a, y) != null &&  gcb.getChessOnLocation(a+1, y) != null && gcb.getChessOnLocation(a+2, y) != null && gcb.getChessOnLocation(a+3, y) != null && gcb.getChessOnLocation(a+4, y) != null){
+                  if(gcb.getChessOnLocation(a, y).getSide() == team && gcb.getChessOnLocation(a+1, y).getSide() == team && gcb.getChessOnLocation(a+2, y).getSide() == team && gcb.getChessOnLocation(a+3, y).getSide() == team && gcb.getChessOnLocation(a+4, y).getSide() == team){
                       return true;
+                  }
+              } 
+          }
+	  }
+	  else{
+		  for(a = x+4 ; a >= x-4 ; a--){
+	              if(a > 14){
+			      a = 14;	  
+		      }	  
+	    	      if(gcb.getChessOnLocation(a, y) != null &&  gcb.getChessOnLocation(a+1, y) != null && gcb.getChessOnLocation(a+2, y) != null && gcb.getChessOnLocation(a+3, y) != null && gcb.getChessOnLocation(a+4, y) != null){
+                          if(gcb.getChessOnLocation(a, y).getSide() == team && gcb.getChessOnLocation(a+1, y).getSide() == team && gcb.getChessOnLocation(a+2, y).getSide() == team && gcb.getChessOnLocation(a+3, y).getSide() == team && gcb.getChessOnLocation(a+4, y).getSide() == team){
+                              return true;
+                          }
+		      }	  
+	          }
+	  }
+      //判斷橫行的狀況
+          if(y < 10){  
+              for(b = y-4 ;b <= y+4 ; b++ ){
+                  if(b < 0){
+                      b = 0;
+                  }
+                  if(gcb.getChessOnLocation(x, b) != null &&  gcb.getChessOnLocation(x, b+1) != null && gcb.getChessOnLocation(x, b+2) != null && gcb.getChessOnLocation(x, b+3) != null && gcb.getChessOnLocation(x, b+4) != null){
+                      if(gcb.getChessOnLocation(x, b).getSide() == team && gcb.getChessOnLocation(x, b + 1).getSide() == team && gcb.getChessOnLocation(x, b+2).getSide() == team && gcb.getChessOnLocation(x, b+3).getSide() == team && gcb.getChessOnLocation(x, b+4).getSide() == team){
+                          return true;
+                      }
+                  }
+              }
+          }  
+          else{
+              for(b = y+4;b >= y-4;b--){
+                  if(b > 14){
+                      b = 14;
+                  }
+                  if(gcb.getChessOnLocation(x, b) != null &&  gcb.getChessOnLocation(x, b+1) != null && gcb.getChessOnLocation(x, b+2) != null && gcb.getChessOnLocation(x, b+3) != null && gcb.getChessOnLocation(x, b+4) != null){
+                      if(gcb.getChessOnLocation(x, b).getSide() == team && gcb.getChessOnLocation(x, b + 1).getSide() == team && gcb.getChessOnLocation(x, b+2).getSide() == team && gcb.getChessOnLocation(x, b+3).getSide() == team && gcb.getChessOnLocation(x, b+4).getSide() == team){
+                          return true;
+                      }
                   }
               }
           }
-      
-    
-      return false;*/
+          //判斷\的狀況
+         if(x < 10){  
+              for(a = x-4,b = y-4 ;a <= x+4 ; a++,b++ ){
+                  if(((a + 4) <= 18) &&  (a >= 0) && ((b+4) <= 18 ) && (b >= 0)) {
+                      if(gcb.getChessOnLocation(a, b) != null &&  gcb.getChessOnLocation(a+1, b+1) != null && gcb.getChessOnLocation(a+2, b+2) != null && gcb.getChessOnLocation(a+3, b+3) != null && gcb.getChessOnLocation(a+4, b+4) != null){
+                          if(gcb.getChessOnLocation(a, b).getSide() == team && gcb.getChessOnLocation(a+1, b + 1).getSide() == team && gcb.getChessOnLocation(a+2, b+2).getSide() == team && gcb.getChessOnLocation(a+3, b+3).getSide() == team && gcb.getChessOnLocation(a+4, b+4).getSide() == team){
+                              return true;
+                          }
+                      }
+                  } 
+              }
+          }  
+          else{
+              for(a = x+4,b = y+4;a >= x-4;a--,b--){
+                  if(((a + 4) <= 18) &&  (a >= 0) && ((b+4) <= 18 ) && (b >= 0)) {
+                      if(gcb.getChessOnLocation(a, b) != null &&  gcb.getChessOnLocation(a+1, b+1) != null && gcb.getChessOnLocation(a+2, b+2) != null && gcb.getChessOnLocation(a+3, b+3) != null && gcb.getChessOnLocation(a+4, b+4) != null){
+                          if(gcb.getChessOnLocation(a, b).getSide() == team && gcb.getChessOnLocation(a+1, b + 1).getSide() == team && gcb.getChessOnLocation(a+2, b+2).getSide() == team && gcb.getChessOnLocation(a+3, b+3).getSide() == team && gcb.getChessOnLocation(a+4, b+4).getSide() == team){
+                              return true;
+                          }
+                      }
+                  }
+              }       
+          }
+          //判斷/的狀況
+         if(x < 10){  
+              for(a = x-4,b = y+4 ;a <= x+4 ; a++,b-- ){
+                  //System.out.println("debug" +a + " " +b);
+                  if(((a + 4) <= 18) &&  ((a) >= 0) && ((b+4) <= 18 ) && ((b-4) >= 0))  {
+                      if(gcb.getChessOnLocation(a, b) != null &&  gcb.getChessOnLocation(a+1, b-1) != null && gcb.getChessOnLocation(a+2, b-2) != null && gcb.getChessOnLocation(a+3, b-3) != null && gcb.getChessOnLocation(a+4, b-4) != null){
+                          if(gcb.getChessOnLocation(a, b).getSide() == team && gcb.getChessOnLocation(a+1, b-1).getSide() == team && gcb.getChessOnLocation(a+2, b-2).getSide() == team && gcb.getChessOnLocation(a+3, b-3).getSide() == team && gcb.getChessOnLocation(a+4, b-4).getSide() == team){
+                              return true;     
+                          }
+                      }
+                  }  
+              }
+         }
+          else{
+              for(a = x+4,b = y-4;a >= x-4;a--,b++){
+                 if(((a + 4) <= 18) &&  ((a) >= 0) && ((b+4) <= 18 ) && ((b) >= 0)) {
+                     //System.out.println(" else debug"+ a + " "+ b);
+                     if(gcb.getChessOnLocation(a, b) != null &&  gcb.getChessOnLocation(a+1, b-1) != null && gcb.getChessOnLocation(a+2, b-2) != null && gcb.getChessOnLocation(a+3, b-3) != null && gcb.getChessOnLocation(a+4, b-4) != null){
+                         if(gcb.getChessOnLocation(a, b).getSide() == team && gcb.getChessOnLocation(a+1, b-1).getSide() == team && gcb.getChessOnLocation(a+2, b-2).getSide() == team && gcb.getChessOnLocation(a+3, b-3).getSide() == team && gcb.getChessOnLocation(a+4, b-4).getSide() == team){
+                             return true;
+                             }
+                         }
+                     }
+              }
+          }
+         
       return false;
   }
   // <editor-fold defaultstate="collapsed" desc="Actions">
@@ -153,10 +223,10 @@ public class GomokuChessGame extends ChessGame {
     int x = coordinate.get("x");
     int y = coordinate.get("y");
     
-    GomokuChess gc = (GomokuChess) gcb.getChessOnLoc(x, y);
+    GomokuChess gc = (GomokuChess) gcb.getChessOnLocation(x, y);
     
     if (gc == null) {
-      gcb.setChessOnLoc(this.getChess(super.currentTurnPlayer), x, y);
+      gcb.setChessOnLocation(this.getChess(super.currentTurnPlayer), x, y);
       System.out.println(x + " " + y);
       drawButtons();
       if(checkVictory(this.getChess(super.currentTurnPlayer).getSide(),x,y) == true){
@@ -173,7 +243,7 @@ public class GomokuChessGame extends ChessGame {
     
     for (int a = 0; a < btnChesses.length; a++) {
       for (int b = 0; b < btnChesses[a].length; b++) {
-        GomokuChess gc = (GomokuChess) gcb.getChessOnLoc(a, b);
+        GomokuChess gc = (GomokuChess) gcb.getChessOnLocation(a, b);
         btnChesses[a][b].setIcon((gc == null) ? emptyIcon : gc.getChessImage());
       }
     }
