@@ -164,6 +164,10 @@ public class ChineseDarkChessGame extends ChessGame {
     System.out.println("Unselected.");
   }
   
+  /**
+   * Disable buttons base on the button that can click after select the chess.
+   * @param enableLoc - The arraylist that store the location that can enable.
+   */
   private void disableButtons(ArrayList<Location> enableLoc) {
     for (int x = 0; x < btnChesses.length; x++) {
       nextChess:
@@ -181,9 +185,6 @@ public class ChineseDarkChessGame extends ChessGame {
               btnChesses[x][y].setEnabled(true);
             }
             else if (dc.getStatus() == DarkChess.STATUS_UNKNOWN) {
-              btnChesses[x][y].setEnabled(false);
-            }
-            else if (dc.getSide() == currentSelectChess.getSide() && !(x == this.currentSelectedX && y == this.currentSelectedY)) {
               btnChesses[x][y].setEnabled(false);
             }
             else {

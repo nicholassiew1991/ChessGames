@@ -61,7 +61,7 @@ public class Main extends JFrame{
 
   private void initNorthPanel() {
     JPanel panelTitle = new JPanel();
-    JLabel lblGameTitle = new JLabel("Chinese Dark Chess");
+    JLabel lblGameTitle = new JLabel("");
 
     panelTitle.add(lblGameTitle);
     container.add(panelTitle, BorderLayout.NORTH);
@@ -69,8 +69,8 @@ public class Main extends JFrame{
 
   private void initForm() {
     JPanel panelForm = new JPanel();
-    JLabel lblPlayerRed = new JLabel("    Player Red: ");
-    JLabel lblPlayerBlack = new JLabel("Player Black: ");
+    JLabel lblPlayerRed = new JLabel("        Player 1: ");
+    JLabel lblPlayerBlack = new JLabel("        Player 2: ");
     JLabel lblGame = new JLabel("            Game: ");
 
     txtRedInput = new JTextField("P1");

@@ -25,6 +25,7 @@ public class DarkChessBoard extends ChessBoard {
     Random rand = new Random();
     DarkChess[] temp = new DarkChess[dc1.length + dc2.length];
     
+    /* Concatenate 2 teams' chess array, and suffling it. */
     System.arraycopy(dc1, 0, temp, 0, dc1.length);
     System.arraycopy(dc2, 0, temp, dc1.length, dc2.length);
     Util.sufflingArray(temp);
@@ -34,11 +35,11 @@ public class DarkChessBoard extends ChessBoard {
         int x = rand.nextInt(4);
         int y = rand.nextInt(8);
 
-        if (locOnBoard[x][y].getChess() != null) {
+        if (getChessOnLoc(x, y) != null) {
           continue;
         }
 
-        locOnBoard[x][y].setChess(dc);
+        setChessOnLoc(dc, x, y);
         break;
       }
     }

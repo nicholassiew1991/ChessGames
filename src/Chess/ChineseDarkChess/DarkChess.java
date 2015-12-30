@@ -59,7 +59,7 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     hmEatMessage.put(EAT_FAILED, "Eat Failed.");
     hmEatMessage.put(EAT_FAILED_WEIGHT_SMALLER, "Your weight is smaller.");
     hmEatMessage.put(EAT_FAILED_GENERAL_EAT_SOLDIER, "General can't eat soldier.");
-    hmEatMessage.put(EAT_FAILED_SAME_TEAM, "Can't eat your team chess.");
+    hmEatMessage.put(EAT_FAILED_SAME_TEAM, "Can't eat your team's chess.");
     hmEatMessage.put(EAT_FAILED_UNKNOWN_CHESS, "The chess hasn't flip yet.");
   }
   
@@ -107,6 +107,13 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
     return this.name;
   }
   
+  /**
+   * Get the clickable location.
+   * @param dcb DarkChesBoard object
+   * @param x - Row of the clicked button.
+   * @param y - Column of the clicked button.
+   * @return The arraylist that store the button that can click.
+   */
   public ArrayList<Location> getClickableLocation(DarkChessBoard dcb, int x, int y) {
     ArrayList<Location> arr = new ArrayList();
     
@@ -160,12 +167,10 @@ public class DarkChess extends Chess implements Eatable<DarkChess>, Movable<Dark
   @Override
   public void move(DarkChessBoard cb, Location src, Location dest) {
     
-    // TODO: Can use setChessOnLoc
-    Location[][] loc = cb.getBoardInfo();
+    DarkChess srcChess = (DarkChess) cb.getChessOnLoc(src.getX(), src.getY());
     
-    
-    loc[dest.getX()][dest.getY()].setChess(cb.getChessOnLoc(src.getX(), src.getY()));
-    loc[src.getX()][src.getY()].setChess(null);
+    cb.setChessOnLoc(srcChess, dest.getX(), dest.getY());
+    cb.setChessOnLoc(null, src.getX(), src.getY());
   }
   
   @Override

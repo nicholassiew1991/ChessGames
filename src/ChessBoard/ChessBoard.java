@@ -5,7 +5,7 @@ import Chess.ChineseDarkChess.DarkChess;
 
 public abstract class ChessBoard {
   
-  protected Location[][] locOnBoard;
+  private Location[][] locOnBoard;
   
   protected void initLocOnBoard(int row, int col) {
     locOnBoard = new Location[row][col];
@@ -15,10 +15,6 @@ public abstract class ChessBoard {
         locOnBoard[a][b] = new Location(a, b);
       }
     }
-  }
-  
-  public Location[][] getBoardInfo() {
-    return locOnBoard;
   }
   
   public void setChessOnLoc(Chess dc, int x, int y) {
