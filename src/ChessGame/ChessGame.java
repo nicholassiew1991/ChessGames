@@ -29,7 +29,7 @@ public abstract class ChessGame {
     cgFrame.setResizable(false);
   }
   
-  protected void initialize(Player p1, Player p2) {
+  final protected void initialize(Player p1, Player p2) {
     initGame(p1, p2);
     currentTurnPlayer = p1;
     initUI();
